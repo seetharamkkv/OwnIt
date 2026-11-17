@@ -1,0 +1,50 @@
+/**
+ * Course gradebook: grids, score computation, score overrides, grade release and CSV export.
+ * Owner: Shreenidhi (tests, grading, and quizzes). PROJECT_PLAN.md section 7.3.
+ */
+type EduGradebook {
+
+  /**
+   * Students by graded items for a course. Columns are the course's non-draft assignments (by
+   * {@link EduAssignment#dueAt}, then title; max score = sum of {@link EduAssignmentStep#points}) followed by
+   * non-draft quizzes. Rows are ACTIVE STUDENT enrollments sorted by display name. Each cell holds the effective
+   * score ({@link EduSubmission#scoreOverride} when set, otherwise {@link EduSubmission#score}), late status, flag
+   * count and status. Instructor or TA of the course (`EduEnrollment.requireCourseRole`).
+   */
+  courseGrid: function(courseId: !string): !EduGradebook.Grid js-server
+
+  /**
+   * The automatic score of a submission, computed from the newest trusted {@link EduTestRun} of every step; does not
+   * save it. A step scores {@link EduAssignmentStep#points} times the share of its {@link EduStepTest} points that
+   * passed (by count when its tests have no points). A test passes only when every result row for it passed. Steps
+   * without a trusted run score 0. When {@link EduSubmission#late}, {@link EduAssignment#latePenaltyPct} is taken
+   * off. Rounded to 2 decimals. Instructor or TA of the course. {@link EduTestRun#recordRegrade} uses this.
+   */
+  computeScore: function(submissionId: !string): !double js-server
+
+  /**
+   * Sets {@link EduSubmission#scoreOverride} (0 to the assignment's max score) and writes a `grade.override`
+   * {@link EduAuditLog}. `reason` is required. Needs {@link EduCourse.Permission#EDIT_GRADES}
+   * (`EduEnrollment.requireCoursePermission`).
+   */
+  overrideScore: function(submissionId: !string, score: !double, reason: !string): !EduSubmission js-server
+
+  /**
+   * Removes {@link EduSubmission#scoreOverride}, so the computed score counts again, and writes a
+   * `grade.overrideClear` {@link EduAuditLog}. `reason` is required. Needs
+   * {@link EduCourse.Permission#EDIT_GRADES}.
+   */
+  clearOverride: function(submissionId: !string, reason: !string): !EduSubmission js-server
+
+  /**
+   * Makes scores for an assignment visible to students by setting {@link EduAssignment#gradesReleasedAt} to now,
+   * and writes a `grade.release` {@link EduAuditLog}. Needs {@link EduCourse.Permission#RELEASE_GRADES}.
+   */
+  releaseGrades: function(assignmentId: !string): !EduAssignment js-server
+
+  /**
+   * The course grid as Canvas-style CSV text: `Student,ID,SIS User ID,Section,<title> (<itemId>)...`, a
+   * `Points Possible` row, then one row per student with effective scores. Instructor or TA only.
+   */
+  exportCsv: function(courseId: !string): !string js-server
+}

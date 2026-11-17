@@ -1,0 +1,25 @@
+/**
+ * An integrity event as the browser reports it to {@link EduIntegrityEvent#logBatch}.
+ */
+type EduIntegrityEvent.ClientEvent {
+
+  /**
+   * What happened.
+   */
+  eventKind: !string enum EduIntegrityEvent.EventKind
+
+  /**
+   * Step the student was on, when known.
+   */
+  stepId: string
+
+  /**
+   * Browser time of the event.
+   */
+  clientAt: datetime
+
+  /**
+   * Measurements for the event.
+   */
+  details: EduIntegrityEvent.Details
+}

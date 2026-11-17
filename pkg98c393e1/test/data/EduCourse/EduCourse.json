@@ -1,0 +1,19 @@
+// Demo courses. Development/test only.
+[
+  {
+    "id": "seed_course_cs101",
+    "code": "CS101-F26",
+    "title": "Introduction to Programming in Python",
+    "term": "Fall 2026",
+    "descriptionMd": "Variables, control flow, functions, files, and a first look at pandas.",
+    "taPermissions": ["EDIT_CONTENT", "VIEW_INTEGRITY", "EDIT_GRADES", "GRANT_EXTENSIONS"],
+    "studentsSeeOwnFlags": true
+  },
+  {
+    "id": "seed_course_ds201",
+    "code": "DS201-F26",
+    "title": "Data Science Foundations",
+    "term": "Fall 2026",
+    "descriptionMd": "Data cleaning, exploratory analysis, and reporting with notebooks."
+  }
+]

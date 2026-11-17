@@ -1,0 +1,17 @@
+/**
+ * Publishing state of an assignment.
+ */
+enum type EduAssignment.Status {
+  /**
+   * Being authored; students cannot see it.
+   */
+  DRAFT
+  /**
+   * Visible to students from {@link EduAssignment#releaseAt}.
+   */
+  PUBLISHED
+  /**
+   * No longer accepts work; kept for grading and review.
+   */
+  CLOSED
+}

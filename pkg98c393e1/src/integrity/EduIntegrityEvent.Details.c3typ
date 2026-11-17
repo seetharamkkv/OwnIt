@@ -1,0 +1,30 @@
+/**
+ * Measurements attached to an integrity event. Never holds pasted text.
+ */
+type EduIntegrityEvent.Details {
+
+  /**
+   * Number of characters involved, for example the size of a blocked paste.
+   */
+  chars: int
+
+  /**
+   * Duration in milliseconds, for example time spent away from the tab.
+   */
+  durationMs: int
+
+  /**
+   * Hash of the content involved, for matching without storing it.
+   */
+  contentHash: string
+
+  /**
+   * Running count, for example the tab-switch number in this session.
+   */
+  count: int
+
+  /**
+   * Short extra note.
+   */
+  note: string
+}

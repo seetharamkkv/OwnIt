@@ -1,0 +1,30 @@
+/**
+ * A quiz in the staff quiz list of a course, returned by {@link EduQuiz#courseQuizzes}.
+ */
+type EduQuiz.CourseRow {
+
+  /**
+   * The quiz with its settings (no questions).
+   */
+  quiz: !EduQuiz
+
+  /**
+   * Questions in the pool.
+   */
+  questionCount: int
+
+  /**
+   * Sum of the pool's question points.
+   */
+  maxScore: double
+
+  /**
+   * Attempts made by students, in any state.
+   */
+  attemptCount: int
+
+  /**
+   * Submitted attempts that still have answers needing manual grading (status SUBMITTED).
+   */
+  needsGradingCount: int
+}

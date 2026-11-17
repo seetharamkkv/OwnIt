@@ -1,0 +1,25 @@
+/**
+ * One row of a bulk enrollment upload, passed to {@link EduEnrollment#bulkEnroll}.
+ */
+type EduEnrollment.BulkRow {
+
+  /**
+   * Email used to find or create the {@link EduUserProfile}.
+   */
+  email: !string
+
+  /**
+   * Display name for a new profile.
+   */
+  displayName: string
+
+  /**
+   * Student number for a new profile.
+   */
+  studentNumber: string
+
+  /**
+   * Role to give in the course.
+   */
+  courseRole: !string enum EduEnrollment.CourseRole
+}

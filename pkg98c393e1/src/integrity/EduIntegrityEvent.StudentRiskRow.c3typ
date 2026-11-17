@@ -1,0 +1,45 @@
+/**
+ * Per-student integrity totals for a course, returned by {@link EduIntegrityEvent#courseReport}.
+ */
+type EduIntegrityEvent.StudentRiskRow {
+
+  /**
+   * Student profile id.
+   */
+  userId: !string
+
+  /**
+   * Student display name.
+   */
+  displayName: string
+
+  /**
+   * Blocked pastes and drops.
+   */
+  pasteBlockedCount: int
+
+  /**
+   * Total time away from the tab, in milliseconds.
+   */
+  tabHiddenMs: int
+
+  /**
+   * Times the student left full screen.
+   */
+  fullscreenExitCount: int
+
+  /**
+   * Large inserts without an in-app paste.
+   */
+  largeInsertCount: int
+
+  /**
+   * Canary matches.
+   */
+  canaryMatchCount: int
+
+  /**
+   * Combined score used to sort students, higher means more to review.
+   */
+  riskScore: double
+}

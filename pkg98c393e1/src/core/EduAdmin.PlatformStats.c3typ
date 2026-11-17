@@ -1,0 +1,35 @@
+/**
+ * Headline numbers returned by {@link EduAdmin#platformStats}.
+ */
+type EduAdmin.PlatformStats {
+
+  /**
+   * Number of active user profiles.
+   */
+  userCount: int
+
+  /**
+   * Number of courses that are not archived.
+   */
+  courseCount: int
+
+  /**
+   * Number of published assignments.
+   */
+  activeAssignmentCount: int
+
+  /**
+   * Number of published quizzes.
+   */
+  activeQuizCount: int
+
+  /**
+   * Integrity events of severity WARN or HIGH in the last 7 days.
+   */
+  integrityFlagsLast7Days: int
+
+  /**
+   * Test runs recorded in the last 7 days.
+   */
+  testRunsLast7Days: int
+}

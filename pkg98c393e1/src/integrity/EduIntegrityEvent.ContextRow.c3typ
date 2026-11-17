@@ -1,0 +1,51 @@
+/**
+ * One submission or quiz attempt of a student, with its integrity totals, returned by
+ * {@link EduIntegrityEvent#studentContexts}.
+ */
+type EduIntegrityEvent.ContextRow {
+
+  /**
+   * Kind of work session.
+   */
+  contextKind: !string enum EduIntegrityEvent.ContextKind
+
+  /**
+   * Submission id or quiz attempt id.
+   */
+  contextId: !string
+
+  /**
+   * Assignment or quiz id.
+   */
+  itemId: string
+
+  /**
+   * Assignment or quiz title.
+   */
+  itemTitle: string
+
+  /**
+   * Submission or attempt status.
+   */
+  status: string
+
+  /**
+   * WARN and HIGH events.
+   */
+  flagCount: int
+
+  /**
+   * HIGH events.
+   */
+  highCount: int
+
+  /**
+   * True when the session is locked.
+   */
+  locked: boolean
+
+  /**
+   * Server time of the newest event.
+   */
+  lastEventAt: datetime
+}

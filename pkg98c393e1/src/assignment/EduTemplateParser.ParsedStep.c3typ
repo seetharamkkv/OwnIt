@@ -1,0 +1,50 @@
+/**
+ * One step found in a template, before it is saved as an {@link EduAssignmentStep}.
+ */
+type EduTemplateParser.ParsedStep {
+
+  /**
+   * Marker id from the template.
+   */
+  markerId: !string
+
+  /**
+   * Title from the marker.
+   */
+  title: string
+
+  /**
+   * Position of the step, starting at 1.
+   */
+  stepOrder: int
+
+  /**
+   * Instructions taken from the comment lines after the marker.
+   */
+  instructionsMd: string
+
+  /**
+   * Content between the markers.
+   */
+  starterContent: string
+
+  /**
+   * Template content before the step.
+   */
+  contextBefore: string
+
+  /**
+   * Template content after the step.
+   */
+  contextAfter: string
+
+  /**
+   * Notebook cell index (IPYNB only).
+   */
+  cellIndex: int
+
+  /**
+   * Points from the marker.
+   */
+  points: double
+}

@@ -1,0 +1,99 @@
+/**
+ * A homework assignment built from a template file whose marked regions become {@link EduAssignmentStep}s.
+ * Owner: Rohith (assignment engine).
+ */
+@db(index=['course, status'])
+entity type EduAssignment {
+
+  /**
+   * Course the assignment belongs to.
+   */
+  course: !EduCourse
+
+  /**
+   * Assignment title.
+   */
+  title: !string
+
+  /**
+   * Overall instructions in Markdown.
+   */
+  descriptionMd: string
+
+  /**
+   * File kind the assignment produces.
+   */
+  fileKind: !string enum EduAssignment.FileKind
+
+  /**
+   * File system URL of the template the instructor uploaded.
+   */
+  templateFileUrl: string
+
+  /**
+   * Template source: PY text, IPYNB JSON text, or the base64-encoded DOCX file.
+   */
+  templateContent: string
+
+  /**
+   * Publishing state.
+   */
+  status: string enum EduAssignment.Status = DRAFT
+
+  /**
+   * When students can first see the assignment.
+   */
+  releaseAt: datetime
+
+  /**
+   * Due date.
+   */
+  dueAt: datetime
+
+  /**
+   * Last moment late work is accepted. Unset means no late work.
+   */
+  lateUntil: datetime
+
+  /**
+   * Percentage taken off a late submission's score.
+   */
+  latePenaltyPct: double
+
+  /**
+   * When grades for this assignment became visible to students. Unset means students see test feedback but no
+   * score. Set by {@link EduGradebook#releaseGrades}, which needs {@link EduCourse.Permission#RELEASE_GRADES}.
+   */
+  gradesReleasedAt: datetime
+
+  /**
+   * Assignment-level integrity overrides, applied on top of the course policy.
+   */
+  integrityPolicy: EduIntegrityPolicy
+
+  /**
+   * Files the tests need, such as sample CSVs, copied into the test runner's file system.
+   * Managed with {@link EduAssignment.Files}.
+   */
+  testDataFiles: [EduAttachment]
+
+  /**
+   * Steps parsed from the template, in {@link EduAssignmentStep#stepOrder} order.
+   */
+  steps: [EduAssignmentStep](assignment)
+
+  /**
+   * Student submissions for this assignment.
+   */
+  submissions: [EduSubmission](assignment)
+
+  /**
+   * Publishing or closing needs the INSTRUCTOR course role (or a platform admin); TAs may only work on drafts.
+   */
+  beforeCreate: ~ js-server
+
+  /**
+   * Same publishing rule as {@link #beforeCreate}, applied when the status changes.
+   */
+  beforeUpdate: ~ js-server
+}

@@ -1,0 +1,16 @@
+// Demo personas for the dev persona switcher (EduSession.setDevPersona). Development/test only.
+[
+  { "id": "seed_user_admin", "displayName": "Avery Admin", "email": "admin@demo.edu", "platformRole": "ADMIN" },
+  { "id": "seed_user_instructor1", "displayName": "Dr. Irene Instructor", "email": "instructor1@demo.edu", "platformRole": "INSTRUCTOR" },
+  { "id": "seed_user_ta1", "displayName": "Theo TA", "email": "ta1@demo.edu", "platformRole": "INSTRUCTOR" },
+  { "id": "seed_user_student01", "displayName": "Sam Student", "email": "student01@demo.edu", "studentNumber": "S2026001", "platformRole": "STUDENT" },
+  { "id": "seed_user_student02", "displayName": "Priya Patel", "email": "student02@demo.edu", "studentNumber": "S2026002", "platformRole": "STUDENT" },
+  { "id": "seed_user_student03", "displayName": "Diego Ramirez", "email": "student03@demo.edu", "studentNumber": "S2026003", "platformRole": "STUDENT" },
+  { "id": "seed_user_student04", "displayName": "Mei Chen", "email": "student04@demo.edu", "studentNumber": "S2026004", "platformRole": "STUDENT" },
+  { "id": "seed_user_student05", "displayName": "Jonah Okafor", "email": "student05@demo.edu", "studentNumber": "S2026005", "platformRole": "STUDENT" },
+  { "id": "seed_user_student06", "displayName": "Ava Novak", "email": "student06@demo.edu", "studentNumber": "S2026006", "platformRole": "STUDENT" },
+  { "id": "seed_user_student07", "displayName": "Liam Murphy", "email": "student07@demo.edu", "studentNumber": "S2026007", "platformRole": "STUDENT" },
+  { "id": "seed_user_student08", "displayName": "Zara Haddad", "email": "student08@demo.edu", "studentNumber": "S2026008", "platformRole": "STUDENT" },
+  { "id": "seed_user_student09", "displayName": "Ethan Kim", "email": "student09@demo.edu", "studentNumber": "S2026009", "platformRole": "STUDENT" },
+  { "id": "seed_user_student10", "displayName": "Nora Lindqvist", "email": "student10@demo.edu", "studentNumber": "S2026010", "platformRole": "STUDENT" }
+]

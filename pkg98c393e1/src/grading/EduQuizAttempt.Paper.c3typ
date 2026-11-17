@@ -1,0 +1,57 @@
+/**
+ * What a student receives when starting or resuming a quiz ({@link EduQuizAttempt#startMine}): the attempt, its
+ * questions in the attempt's order without correct answers or hidden tests, the student's saved answers, and the
+ * server time so the countdown can correct for clock skew.
+ */
+type EduQuizAttempt.Paper {
+
+  /**
+   * The attempt: id, attemptNo, status, startedAt, deadlineAt, questionIds and quiz.id. Never the score.
+   */
+  attempt: !EduQuizAttempt
+
+  /**
+   * Quiz id.
+   */
+  quizId: string
+
+  /**
+   * Quiz title.
+   */
+  quizTitle: string
+
+  /**
+   * Course id, for the integrity context.
+   */
+  courseId: string
+
+  /**
+   * Course code, for the watermark.
+   */
+  courseCode: string
+
+  /**
+   * Time limit in minutes before accommodations. Unset means no limit.
+   */
+  timeLimitMin: int
+
+  /**
+   * Extra time percentage applied to this attempt's deadline.
+   */
+  extraTimePct: int
+
+  /**
+   * Server time when the paper was built. The client offsets its clock by `serverNow - Date.now()`.
+   */
+  serverNow: !datetime
+
+  /**
+   * Questions in the order shown.
+   */
+  questions: [EduQuizAttempt.PaperQuestion]
+
+  /**
+   * The student's saved answers: id, question.id, selectedOptionIds, answerText and code only.
+   */
+  answers: [EduQuizAnswer]
+}

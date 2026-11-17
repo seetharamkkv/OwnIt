@@ -1,0 +1,34 @@
+/**
+ * Per-student accommodations recorded on an {@link EduEnrollment} and applied to every assignment and quiz in the
+ * course. Set by an instructor (or a TA with {@link EduCourse.Permission#GRANT_EXTENSIONS}); each change writes an
+ * {@link EduAuditLog} entry. The student workspace and quiz page read the result of
+ * {@link EduIntegrityPolicy#forContext}, which applies the exemptions below on top of the merged policy.
+ */
+type EduEnrollment.Accommodation {
+
+  /**
+   * Extra time as a percentage of a quiz's time limit, for example `50` for time-and-a-half.
+   * Ignored for assignments; use {@link EduSubmission#extensionUntil} there.
+   */
+  extraTimePct: int
+
+  /**
+   * When true, full screen is not required for this student even if the policy sets `requireFullscreen`.
+   */
+  fullscreenExempt: boolean
+
+  /**
+   * When true, the on-screen watermark is hidden for this student (for example for screen-reader users).
+   */
+  watermarkExempt: boolean
+
+  /**
+   * When true, tab-switch and window-blur events are logged but never warn or lock this student.
+   */
+  tabSwitchExempt: boolean
+
+  /**
+   * Private note for instructors, never shown to the student.
+   */
+  note: string
+}

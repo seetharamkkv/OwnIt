@@ -1,0 +1,29 @@
+/**
+ * Reads step markers out of assignment templates (format: PROJECT_PLAN.md section 4.1).
+ * Steps keep the template text between markers in {@link EduAssignmentStep#contextBefore}, so a file is rebuilt as
+ * the sum of (contextBefore + answer) for each step, followed by the last step's {@link EduAssignmentStep#contextAfter}.
+ * Owner: Rohith (assignment engine).
+ */
+type EduTemplateParser {
+
+  /**
+   * Parses a template into steps without saving anything. Use it for the builder's live preview.
+   * `content` is the text for PY and IPYNB, and the base64-encoded file for DOCX.
+   */
+  parse: function(fileKind: !string enum EduAssignment.FileKind, content: !string): !EduTemplateParser.Result py
+
+  /**
+   * Parses the assignment's template, stores it on the assignment, and upserts its steps with ids
+   * `<assignmentId>_<markerId>`, so tests and answers stay attached across re-imports. Steps that vanished from the
+   * template are removed when nobody has answered them; otherwise a warning is returned. Pass the template text in
+   * `content` (PY, IPYNB) or a file system URL in `fileUrl`; with neither, the assignment's stored
+   * {@link EduAssignment#templateContent} is re-imported. Instructor or TA only.
+   */
+  importTemplate: function(assignmentId: !string, content: string, fileUrl: string): !EduTemplateParser.Result py
+
+  /**
+   * DOCX half of {@link #parse}: reads `{{STEP ...}}` / `{{END STEP}}` paragraphs from the base64-encoded file and
+   * returns starter content and context as HTML. Runs in the `py-edu_312` runtime, which has python-docx.
+   */
+  doParseDocx: private function(contentBase64: !string): !EduTemplateParser.Result py-edu_312
+}

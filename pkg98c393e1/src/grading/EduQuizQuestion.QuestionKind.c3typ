@@ -1,0 +1,25 @@
+/**
+ * Kind of quiz question.
+ */
+enum type EduQuizQuestion.QuestionKind {
+  /**
+   * Pick exactly one option.
+   */
+  SINGLE_CHOICE
+  /**
+   * Pick every correct option.
+   */
+  MULTI_CHOICE
+  /**
+   * True or false.
+   */
+  TRUE_FALSE
+  /**
+   * Type a short text answer, matched against accepted answers.
+   */
+  SHORT_ANSWER
+  /**
+   * Write code that is graded by tests.
+   */
+  CODE
+}

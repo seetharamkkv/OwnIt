@@ -1,0 +1,13 @@
+/**
+ * How a step answer's content is stored.
+ */
+enum type EduStepResponse.ContentFormat {
+  /**
+   * Plain text, used for code (PY and IPYNB).
+   */
+  TEXT
+  /**
+   * Sanitized HTML from the Word-style editor (DOCX).
+   */
+  HTML
+}

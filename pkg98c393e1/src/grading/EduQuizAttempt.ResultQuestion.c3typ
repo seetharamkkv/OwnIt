@@ -1,0 +1,90 @@
+/**
+ * One question of {@link EduQuizAttempt.Result}: the student's answer and, when results are visible, how it scored.
+ */
+type EduQuizAttempt.ResultQuestion {
+
+  /**
+   * Question id.
+   */
+  questionId: !string
+
+  /**
+   * Kind of question.
+   */
+  questionKind: !string enum EduQuizQuestion.QuestionKind
+
+  /**
+   * Question text in Markdown.
+   */
+  promptMd: string
+
+  /**
+   * Options in the order the student saw them.
+   */
+  options: [EduQuizOption]
+
+  /**
+   * Points the question is worth.
+   */
+  points: double
+
+  /**
+   * Answer id (staff view only), for {@link EduQuizAnswer#gradeManually}.
+   */
+  answerId: string
+
+  /**
+   * Option ids the student chose.
+   */
+  selectedOptionIds: [string]
+
+  /**
+   * The student's short answer.
+   */
+  answerText: string
+
+  /**
+   * The student's code.
+   */
+  code: string
+
+  /**
+   * True or false for automatically graded kinds; unset for CODE questions and when results are hidden.
+   */
+  correct: boolean
+
+  /**
+   * Points earned: manual score, else automatic score, else 0. Set only when results are visible.
+   */
+  pointsEarned: double
+
+  /**
+   * Automatic score (staff view only).
+   */
+  autoScore: double
+
+  /**
+   * Manual score (staff view only).
+   */
+  manualScore: double
+
+  /**
+   * True when the answer still needs a manual grade (an answered CODE question without one).
+   */
+  needsManualGrading: boolean
+
+  /**
+   * Correct option ids. Set only when results are visible.
+   */
+  correctOptionIds: [string]
+
+  /**
+   * Accepted short answers. Set only when results are visible.
+   */
+  acceptedAnswers: [string]
+
+  /**
+   * Grader feedback. Set only when results are visible.
+   */
+  feedback: string
+}

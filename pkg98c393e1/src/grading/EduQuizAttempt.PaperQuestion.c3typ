@@ -1,0 +1,40 @@
+/**
+ * A quiz question as a student sees it, with no correct answers and no hidden tests.
+ */
+type EduQuizAttempt.PaperQuestion {
+
+  /**
+   * Question id.
+   */
+  questionId: !string
+
+  /**
+   * Kind of question.
+   */
+  questionKind: !string enum EduQuizQuestion.QuestionKind
+
+  /**
+   * Question text in Markdown.
+   */
+  promptMd: string
+
+  /**
+   * Options in the order shown for this attempt.
+   */
+  options: [EduQuizOption]
+
+  /**
+   * Starter code for CODE questions.
+   */
+  codeStarter: string
+
+  /**
+   * Points the question is worth.
+   */
+  points: double
+
+  /**
+   * VISIBLE tests of a CODE question (id, testName, code, timeoutMs), which the browser runs for feedback only.
+   */
+  visibleTests: [EduStepTest]
+}

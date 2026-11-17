@@ -1,0 +1,20 @@
+/**
+ * Outcome of one row of {@link EduEnrollment#bulkEnroll}.
+ */
+type EduEnrollment.BulkResult {
+
+  /**
+   * Email from the input row.
+   */
+  email: string
+
+  /**
+   * True when the person is now enrolled.
+   */
+  ok: boolean
+
+  /**
+   * Why the row failed, or a note such as `already enrolled`.
+   */
+  message: string
+}

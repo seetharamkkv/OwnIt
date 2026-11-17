@@ -1,0 +1,153 @@
+// Demo questions for seed_quiz_cs101_q1 (Shreenidhi): one of every kind. Development/test only.
+[
+  {
+    "id": "seed_quizq_cs101_q1_1",
+    "questionOrder": 1,
+    "questionKind": "SINGLE_CHOICE",
+    "promptMd": "Which function reads a CSV file into a DataFrame?",
+    "options": [
+      {
+        "optionId": "a",
+        "label": "`pd.read_csv(path)`"
+      },
+      {
+        "optionId": "b",
+        "label": "`pd.load_csv(path)`"
+      },
+      {
+        "optionId": "c",
+        "label": "`pd.DataFrame.from_file(path)`"
+      },
+      {
+        "optionId": "d",
+        "label": "`open(path).read()`"
+      }
+    ],
+    "correctOptionIds": [
+      "a"
+    ],
+    "points": 1,
+    "poolTag": "loading",
+    "quiz": {
+      "id": "seed_quiz_cs101_q1"
+    }
+  },
+  {
+    "id": "seed_quizq_cs101_q1_2",
+    "questionOrder": 2,
+    "questionKind": "MULTI_CHOICE",
+    "promptMd": "`df` is a DataFrame with a column `units`. Which expressions return a **Series**? Select all that apply.",
+    "options": [
+      {
+        "optionId": "a",
+        "label": "`df['units']`"
+      },
+      {
+        "optionId": "b",
+        "label": "`df.units`"
+      },
+      {
+        "optionId": "c",
+        "label": "`df[['units']]`"
+      },
+      {
+        "optionId": "d",
+        "label": "`df.loc[:, 'units']`"
+      }
+    ],
+    "correctOptionIds": [
+      "a",
+      "b",
+      "d"
+    ],
+    "points": 2,
+    "poolTag": "selecting",
+    "quiz": {
+      "id": "seed_quiz_cs101_q1"
+    }
+  },
+  {
+    "id": "seed_quizq_cs101_q1_3",
+    "questionOrder": 3,
+    "questionKind": "TRUE_FALSE",
+    "promptMd": "`df.dropna()` removes rows from `df` itself (in place) by default.",
+    "options": [
+      {
+        "optionId": "true",
+        "label": "True"
+      },
+      {
+        "optionId": "false",
+        "label": "False"
+      }
+    ],
+    "correctOptionIds": [
+      "false"
+    ],
+    "points": 1,
+    "poolTag": "cleaning",
+    "quiz": {
+      "id": "seed_quiz_cs101_q1"
+    }
+  },
+  {
+    "id": "seed_quizq_cs101_q1_4",
+    "questionOrder": 4,
+    "questionKind": "SHORT_ANSWER",
+    "promptMd": "Which DataFrame attribute gives the number of rows and columns as a tuple, for example `(3, 4)`? Type the attribute name only.",
+    "acceptedAnswers": [
+      "shape",
+      "df.shape",
+      ".shape"
+    ],
+    "points": 1,
+    "poolTag": "selecting",
+    "quiz": {
+      "id": "seed_quiz_cs101_q1"
+    }
+  },
+  {
+    "id": "seed_quizq_cs101_q1_5",
+    "questionOrder": 5,
+    "questionKind": "SINGLE_CHOICE",
+    "promptMd": "What does `df.groupby('region')['units'].sum()` return?",
+    "options": [
+      {
+        "optionId": "a",
+        "label": "A Series of total units, indexed by region"
+      },
+      {
+        "optionId": "b",
+        "label": "A DataFrame with a single row"
+      },
+      {
+        "optionId": "c",
+        "label": "A list of sums"
+      },
+      {
+        "optionId": "d",
+        "label": "One integer: the total of all units"
+      }
+    ],
+    "correctOptionIds": [
+      "a"
+    ],
+    "points": 1,
+    "poolTag": "summarising",
+    "quiz": {
+      "id": "seed_quiz_cs101_q1"
+    }
+  },
+  {
+    "id": "seed_quizq_cs101_q1_6",
+    "questionOrder": 6,
+    "questionKind": "CODE",
+    "promptMd": "Write a function `total_units(df)` that returns the sum of the `units` column of `df`, counting missing values as 0. Return a plain Python `int`.",
+    "codeStarter": "import pandas as pd\n\n\ndef total_units(df):\n    # Your code here\n    pass\n",
+    "points": 3,
+    "poolTag": "summarising",
+    "quiz": {
+      "id": "seed_quiz_cs101_q1"
+    }
+  }
+]

@@ -1,0 +1,65 @@
+/**
+ * A course (class section) that groups enrollments, assignments, and quizzes.
+ * Owner: Shreya (core and admin).
+ */
+@db(unique=['code'])
+entity type EduCourse {
+
+  /**
+   * Short unique course code, for example `CS101-F26`.
+   */
+  code: !string
+
+  /**
+   * Full course title.
+   */
+  title: !string
+
+  /**
+   * Academic term label, for example `Fall 2026`.
+   */
+  term: string
+
+  /**
+   * Course description in Markdown.
+   */
+  descriptionMd: string
+
+  /**
+   * When true, the course is read-only and hidden from course lists.
+   */
+  archived: boolean
+
+  /**
+   * Course-level integrity overrides, applied on top of {@link EduPlatformConfig#defaultPolicy}.
+   */
+  integrityPolicy: EduIntegrityPolicy
+
+  /**
+   * Privileged actions TAs may perform in this course. Instructors hold every {@link EduCourse.Permission};
+   * TAs hold only these. Unset means the platform default {@link EduPlatformConfig#defaultTaPermissions}.
+   * Checked by {@link EduEnrollment#requireCoursePermission}.
+   */
+  taPermissions: [string enum EduCourse.Permission]
+
+  /**
+   * When true, students in this course can see a summary of their own integrity flags (counts by kind), which
+   * supports fairness and appeals. Never includes other students' data.
+   */
+  studentsSeeOwnFlags: boolean
+
+  /**
+   * People enrolled in the course.
+   */
+  enrollments: [EduEnrollment](course)
+
+  /**
+   * Assignments in the course.
+   */
+  assignments: [EduAssignment](course)
+
+  /**
+   * Quizzes in the course.
+   */
+  quizzes: [EduQuiz](course)
+}

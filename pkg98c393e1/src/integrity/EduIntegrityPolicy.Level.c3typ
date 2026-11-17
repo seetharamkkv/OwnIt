@@ -1,0 +1,22 @@
+/**
+ * Level at which an integrity policy is set. Levels are merged from {@link #PLATFORM} down to the item by
+ * {@link EduIntegrityPolicy#forContext}.
+ */
+enum type EduIntegrityPolicy.Level {
+  /**
+   * Platform default, {@link EduPlatformConfig#defaultPolicy}. Edited by admins in the admin console.
+   */
+  PLATFORM
+  /**
+   * Course override, {@link EduCourse#integrityPolicy}.
+   */
+  COURSE
+  /**
+   * Assignment override, {@link EduAssignment#integrityPolicy}.
+   */
+  ASSIGNMENT
+  /**
+   * Quiz override, {@link EduQuiz#integrityPolicy}.
+   */
+  QUIZ
+}

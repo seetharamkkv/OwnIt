@@ -1,0 +1,58 @@
+/**
+ * Record of a privileged change (grades, policies, extensions, enrollment, roles), shown in the admin audit log.
+ * The time of the change is `meta.created`.
+ * Owner: Shreya (core and admin).
+ */
+@db(index=['courseId', 'actorId', 'action'])
+entity type EduAuditLog {
+
+  /**
+   * Effective user who made the change, from {@link EduSession#currentUserId}.
+   */
+  actorId: !string
+
+  /**
+   * Platform role of the actor at the time of the change.
+   */
+  actorRole: string enum EduUserProfile.PlatformRole
+
+  /**
+   * Dotted action name, for example `grade.override`, `policy.update`, `extension.grant`, `user.roleChange`.
+   */
+  action: !string
+
+  /**
+   * C3 type name of the changed record, for example `EduSubmission`.
+   */
+  targetTypeName: string
+
+  /**
+   * Id of the changed record.
+   */
+  targetId: string
+
+  /**
+   * Course the change belongs to, when there is one.
+   */
+  courseId: string
+
+  /**
+   * JSON text of the relevant fields before the change.
+   */
+  beforeJson: string
+
+  /**
+   * JSON text of the relevant fields after the change.
+   */
+  afterJson: string
+
+  /**
+   * Reason the actor gave, when the action asks for one.
+   */
+  reason: string
+
+  /**
+   * Writes one audit entry for the current effective user. Every privileged write calls this.
+   */
+  record: function(action: !string, targetTypeName: !string, targetId: !string, courseId: string, beforeJson: string, afterJson: string, reason: string): EduAuditLog js-server
+}

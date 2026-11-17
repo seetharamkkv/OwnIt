@@ -1,0 +1,25 @@
+/**
+ * Where a student's submission is in its lifecycle.
+ */
+enum type EduSubmission.Status {
+  /**
+   * Created but the student has not edited any step yet.
+   */
+  NOT_STARTED
+  /**
+   * The student is working on steps.
+   */
+  IN_PROGRESS
+  /**
+   * Submitted and locked; the final file is assembled.
+   */
+  SUBMITTED
+  /**
+   * A trusted score exists.
+   */
+  GRADED
+  /**
+   * Grades and feedback are visible to the student.
+   */
+  RETURNED
+}

@@ -1,0 +1,13 @@
+/**
+ * Kind of graded item in the gradebook.
+ */
+enum type EduGradebook.ItemKind {
+  /**
+   * An {@link EduAssignment}.
+   */
+  ASSIGNMENT
+  /**
+   * An {@link EduQuiz}.
+   */
+  QUIZ
+}

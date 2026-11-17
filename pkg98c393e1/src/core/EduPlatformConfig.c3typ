@@ -1,0 +1,40 @@
+/**
+ * Platform-wide settings that admins change: integrity defaults, locked policy fields, data retention, and feature flags.
+ * Owner: Shreya (core and admin).
+ */
+type EduPlatformConfig mixes Config, Singleton {
+
+  /**
+   * Institution name shown in the top bar and exports.
+   */
+  institutionName: string
+
+  /**
+   * Integrity policy every course starts from. Courses and assignments override it through
+   * {@link EduIntegrityPolicy#forContext}.
+   */
+  defaultPolicy: EduIntegrityPolicy
+
+  /**
+   * Names of {@link EduIntegrityPolicy} fields that instructors cannot loosen, for example `pasteMode`.
+   */
+  lockedPolicyFields: [string]
+
+  /**
+   * Days to keep {@link EduIntegrityEvent} rows before the nightly purge removes them.
+   */
+  integrityRetentionDays: int = 365
+
+  /**
+   * {@link EduCourse.Permission}s a TA holds in a course whose {@link EduCourse#taPermissions} is unset.
+   * The shipped default is `EDIT_CONTENT` and `VIEW_INTEGRITY`: TAs can draft and review but not change grades,
+   * publish, extend deadlines or release locks until an instructor turns that on for their course.
+   */
+  defaultTaPermissions: [string enum EduCourse.Permission]
+
+  /**
+   * Feature switches by name. Keys: `quizzes`, `notebooks`, `docx`, `forum`, `serverTests`, `devPersonas`.
+   * A missing key means off. `devPersonas` must stay off outside development.
+   */
+  featureFlags: map<string, boolean>
+}

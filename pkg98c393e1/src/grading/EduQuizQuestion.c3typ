@@ -1,0 +1,91 @@
+/**
+ * A question in a quiz pool. Correct answers never leave the server.
+ * Owner: Shreenidhi (tests, grading, and quizzes).
+ */
+@db(index=['quiz, poolTag'])
+entity type EduQuizQuestion {
+
+  /**
+   * Quiz the question belongs to.
+   */
+  quiz: !EduQuiz
+
+  /**
+   * Order when questions are not shuffled.
+   */
+  questionOrder: int
+
+  /**
+   * Kind of question.
+   */
+  questionKind: !string enum EduQuizQuestion.QuestionKind
+
+  /**
+   * Question text in Markdown.
+   */
+  promptMd: !string
+
+  /**
+   * Options for choice and true/false questions.
+   */
+  options: [EduQuizOption]
+
+  /**
+   * Ids of the correct options.
+   */
+  correctOptionIds: [string]
+
+  /**
+   * Accepted short answers, compared ignoring case and extra whitespace.
+   */
+  acceptedAnswers: [string]
+
+  /**
+   * Starter code for CODE questions.
+   */
+  codeStarter: string
+
+  /**
+   * Points the question is worth.
+   */
+  points: double
+
+  /**
+   * Pool label used to draw questions, for example `loops`.
+   */
+  poolTag: string
+
+  /**
+   * Tests that grade a CODE question.
+   */
+  codeTests: [EduStepTest](question)
+
+  /**
+   * Staff (course INSTRUCTOR or TA, or admin): every question of a quiz with correct answers, in
+   * {@link #questionOrder}. Code tests come from {@link EduStepTest#questionTests}.
+   */
+  forQuiz: function(quizId: !string): [EduQuizQuestion] js-server
+
+  /**
+   * Creates (no id) or updates a question. Needs `EDIT_CONTENT` in the quiz's course; the quiz can't change on update,
+   * and the kind can't change once the quiz has attempts. Checks: a prompt; points ≥ 0 (default 1); choice kinds need
+   * at least 2 options with unique, non-empty optionIds and labels, and correctOptionIds among them; SINGLE_CHOICE and
+   * TRUE_FALSE exactly one correct option, MULTI_CHOICE at least one; TRUE_FALSE options are exactly the optionIds
+   * `true` and `false`; SHORT_ANSWER needs at least one accepted answer. Fields that don't apply to the kind are
+   * cleared. New questions go last. Throws `EDU_VALIDATION` with the first problem found.
+   */
+  saveForQuiz: function(question: !EduQuizQuestion): !EduQuizQuestion js-server
+
+  /**
+   * Deletes a question and its code tests. Needs `EDIT_CONTENT`. Refused (`EDU_VALIDATION`) once the quiz has attempts.
+   * Returns true when a question was removed.
+   */
+  removeForQuiz: function(questionId: !string): boolean js-server
+
+  /**
+   * Staff (course INSTRUCTOR or TA, or admin): problems that block publishing a quiz, such as no questions, a question
+   * failing {@link #saveForQuiz}'s checks, or {@link EduQuiz#questionsPerAttempt} above the pool size. Each entry reads
+   * like `Question 2: needs at least one correct option`. Empty when the quiz can be published.
+   */
+  checkQuiz: function(quizId: !string): [string] js-server
+}

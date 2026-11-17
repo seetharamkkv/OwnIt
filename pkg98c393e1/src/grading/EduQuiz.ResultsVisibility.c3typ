@@ -1,0 +1,17 @@
+/**
+ * When students see their quiz results.
+ */
+enum type EduQuiz.ResultsVisibility {
+  /**
+   * Never shown to students.
+   */
+  NEVER
+  /**
+   * Shown right after the student submits.
+   */
+  AFTER_SUBMIT
+  /**
+   * Shown after the quiz closes for everyone.
+   */
+  AFTER_CLOSE
+}

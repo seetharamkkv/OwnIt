@@ -1,0 +1,15 @@
+/**
+ * Steps and warnings produced by {@link EduTemplateParser}.
+ */
+type EduTemplateParser.Result {
+
+  /**
+   * Steps in template order.
+   */
+  steps: [EduTemplateParser.ParsedStep]
+
+  /**
+   * Problems found, such as duplicate ids, unclosed markers, or nested steps.
+   */
+  warnings: [string]
+}

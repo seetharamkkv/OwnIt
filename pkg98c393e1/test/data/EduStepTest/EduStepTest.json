@@ -1,0 +1,85 @@
+// Demo step tests (Shreenidhi). Visible tests run in the student's browser for feedback; hidden tests only run in
+// an instructor regrade. Each test runs against the student's program up to its step, with pandas already imported
+// by the template as `pd`.
+[
+  {
+    "id": "seed_test_hw1_load_visible",
+    "step": { "id": "seed_assignment_cs101_hw1_load" },
+    "testName": "load_data returns the CSV as a DataFrame",
+    "code": "import os\nimport tempfile\n\n\ndef _write_csv(text):\n    fd, path = tempfile.mkstemp(suffix=\".csv\")\n    with os.fdopen(fd, \"w\") as f:\n        f.write(text)\n    return path\n\n\ndef test_load_returns_dataframe():\n    path = _write_csv(\"region,product,units,price\\nNorth,Pen,3,1.5\\nSouth,Ink,,2.0\\n\")\n    df = load_data(path)\n    assert isinstance(df, pd.DataFrame), f\"expected a DataFrame, got {type(df).__name__}\"\n    assert df.shape == (2, 4), f\"expected shape (2, 4), got {df.shape}\"\n",
+    "visibility": "VISIBLE",
+    "points": 1,
+    "timeoutMs": 5000,
+    "testOrder": 1
+  },
+  {
+    "id": "seed_test_hw1_load_hidden",
+    "step": { "id": "seed_assignment_cs101_hw1_load" },
+    "testName": "load_data keeps the column names",
+    "code": "import os\nimport tempfile\n\n\ndef test_load_keeps_columns():\n    fd, path = tempfile.mkstemp(suffix=\".csv\")\n    with os.fdopen(fd, \"w\") as f:\n        f.write(\"region,product,units,price\\nEast,Pad,7,0.5\\n\")\n    df = load_data(path)\n    assert list(df.columns) == [\"region\", \"product\", \"units\", \"price\"], f\"unexpected columns {list(df.columns)}\"\n",
+    "visibility": "HIDDEN",
+    "points": 1,
+    "timeoutMs": 5000,
+    "testOrder": 2
+  },
+  {
+    "id": "seed_test_hw1_clean_visible",
+    "step": { "id": "seed_assignment_cs101_hw1_clean" },
+    "testName": "clean_data drops missing units and adds revenue",
+    "code": "def _sample():\n    return pd.DataFrame({\n        \"region\": [\"North\", \"South\", \"North\"],\n        \"product\": [\"Pen\", \"Ink\", \"Pad\"],\n        \"units\": [4.0, None, 2.0],\n        \"price\": [2.5, 2.0, 1.0],\n    })\n\n\ndef test_clean_drops_missing_units():\n    out = clean_data(_sample())\n    assert len(out) == 2, f\"expected 2 rows after dropping missing units, got {len(out)}\"\n\n\ndef test_clean_adds_revenue():\n    out = clean_data(_sample())\n    assert \"revenue\" in out.columns, \"there is no revenue column\"\n    assert list(out[\"revenue\"]) == [10.0, 2.0], f\"expected revenue [10.0, 2.0], got {list(out['revenue'])}\"\n",
+    "visibility": "VISIBLE",
+    "points": 2,
+    "timeoutMs": 5000,
+    "testOrder": 1
+  },
+  {
+    "id": "seed_test_hw1_clean_hidden",
+    "step": { "id": "seed_assignment_cs101_hw1_clean" },
+    "testName": "clean_data makes units an int and leaves the input alone",
+    "code": "def test_units_are_int():\n    df = pd.DataFrame({\"region\": [\"N\"], \"product\": [\"a\"], \"units\": [3.0], \"price\": [1.0]})\n    out = clean_data(df)\n    assert pd.api.types.is_integer_dtype(out[\"units\"]), f\"units should be int, got {out['units'].dtype}\"\n\n\ndef test_input_not_changed():\n    df = pd.DataFrame({\"region\": [\"N\", \"S\"], \"product\": [\"a\", \"b\"], \"units\": [3.0, None], \"price\": [1.0, 2.0]})\n    clean_data(df)\n    assert len(df) == 2 and \"revenue\" not in df.columns, \"clean_data changed the DataFrame it was given\"\n",
+    "visibility": "HIDDEN",
+    "points": 1,
+    "timeoutMs": 5000,
+    "testOrder": 2
+  },
+  {
+    "id": "seed_test_hw1_summarize_visible",
+    "step": { "id": "seed_assignment_cs101_hw1_summarize" },
+    "testName": "summarize totals revenue per region, highest first",
+    "code": "def test_summarize_sorted_totals():\n    df = pd.DataFrame({\"region\": [\"North\", \"South\", \"North\"], \"revenue\": [5.0, 20.0, 1.0]})\n    out = summarize(df)\n    assert out is not None, \"summarize returned None\"\n    assert \"total_revenue\" in out.columns, f\"expected a total_revenue column, got {list(out.columns)}\"\n    assert list(out[\"total_revenue\"]) == [20.0, 6.0], f\"expected [20.0, 6.0], got {list(out['total_revenue'])}\"\n",
+    "visibility": "VISIBLE",
+    "points": 2,
+    "timeoutMs": 5000,
+    "testOrder": 1
+  },
+  {
+    "id": "seed_test_hw1_summarize_hidden",
+    "step": { "id": "seed_assignment_cs101_hw1_summarize" },
+    "testName": "summarize has one row per region",
+    "code": "def test_one_row_per_region():\n    df = pd.DataFrame({\"region\": [\"A\", \"B\", \"A\", \"C\"], \"revenue\": [1.0, 2.0, 3.0, 0.5]})\n    out = summarize(df)\n    assert len(out) == 3, f\"expected 3 regions, got {len(out)}\"\n",
+    "visibility": "HIDDEN",
+    "points": 1,
+    "timeoutMs": 5000,
+    "testOrder": 2
+  },
+  {
+    "id": "seed_test_lab1_mean_mass_visible",
+    "step": { "id": "seed_assignment_ds201_lab1_mean_mass" },
+    "testName": "mean_mass is the mean mass per species",
+    "code": "def test_mean_mass_values():\n    assert mean_mass is not None, \"mean_mass is still None\"\n    assert round(float(mean_mass[\"Gentoo\"])) == 5100, f\"expected Gentoo 5100, got {mean_mass['Gentoo']}\"\n    assert round(float(mean_mass[\"Adelie\"])) == 3775, f\"expected Adelie 3775, got {mean_mass['Adelie']}\"\n",
+    "visibility": "VISIBLE",
+    "points": 2,
+    "timeoutMs": 5000,
+    "testOrder": 1
+  },
+  {
+    "id": "seed_test_lab1_longest_bill_visible",
+    "step": { "id": "seed_assignment_ds201_lab1_longest_bill" },
+    "testName": "longest is the species with the longest average bill",
+    "code": "def test_longest_bill():\n    assert isinstance(longest, str), f\"longest should be a string, got {type(longest).__name__}\"\n    assert longest == \"Gentoo\", f\"expected Gentoo, got {longest!r}\"\n",
+    "visibility": "VISIBLE",
+    "points": 2,
+    "timeoutMs": 5000,
+    "testOrder": 1
+  }
+]

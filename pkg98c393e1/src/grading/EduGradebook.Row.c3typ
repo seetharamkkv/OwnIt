@@ -1,0 +1,25 @@
+/**
+ * A gradebook row: one student and a cell per item.
+ */
+type EduGradebook.Row {
+
+  /**
+   * Student profile id.
+   */
+  studentId: !string
+
+  /**
+   * Student display name.
+   */
+  displayName: string
+
+  /**
+   * Student number.
+   */
+  studentNumber: string
+
+  /**
+   * One cell per {@link EduGradebook.Grid#items} entry, in the same order.
+   */
+  cells: [EduGradebook.Cell]
+}

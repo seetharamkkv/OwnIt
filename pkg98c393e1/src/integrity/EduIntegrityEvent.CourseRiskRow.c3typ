@@ -1,0 +1,30 @@
+/**
+ * Per-course integrity totals for the admin overview, returned by {@link EduIntegrityEvent#platformReport}.
+ */
+type EduIntegrityEvent.CourseRiskRow {
+
+  /**
+   * Course id.
+   */
+  courseId: !string
+
+  /**
+   * Course code.
+   */
+  courseCode: string
+
+  /**
+   * Students with at least one WARN or HIGH event.
+   */
+  flaggedStudentCount: int
+
+  /**
+   * HIGH severity events.
+   */
+  highSeverityCount: int
+
+  /**
+   * All events.
+   */
+  totalEventCount: int
+}

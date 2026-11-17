@@ -1,0 +1,13 @@
+{
+  "id": "EduQuizAutoSubmit",
+  "description": "Submits and grades quiz attempts whose deadline has passed (EduQuizAttempt.autoSubmitExpired). Owner: Shreenidhi.",
+  "action": {
+    "typeName": "EduQuizAttempt",
+    "actionName": "autoSubmitExpired"
+  },
+  "scheduleDef": {
+    "cronExpression": "0 * * * * ?"
+  },
+  "concurrent": false,
+  "noHistory": true
+}

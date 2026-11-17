@@ -1,0 +1,47 @@
+/**
+ * Results of a submitted attempt. For students ({@link EduQuizAttempt#resultMine}) scores, correctness and correct
+ * answers are filled in only when {@link #resultsVisible}; staff ({@link EduQuizAttempt#reviewAttempt}) always get
+ * everything, including answer ids for {@link EduQuizAnswer#gradeManually}.
+ */
+type EduQuizAttempt.Result {
+
+  /**
+   * The attempt: id, attemptNo, status, startedAt, deadlineAt, submittedAt, quiz.id, and score only when visible.
+   */
+  attempt: !EduQuizAttempt
+
+  /**
+   * Quiz title.
+   */
+  quizTitle: string
+
+  /**
+   * Student's display name (staff view only).
+   */
+  studentName: string
+
+  /**
+   * True when scores and correct answers are included.
+   */
+  resultsVisible: boolean
+
+  /**
+   * Total score. Set only when {@link #resultsVisible}.
+   */
+  score: double
+
+  /**
+   * Sum of the points of this attempt's questions.
+   */
+  maxScore: double
+
+  /**
+   * True while answers still need manual grading (status SUBMITTED).
+   */
+  pendingManualGrading: boolean
+
+  /**
+   * One row per question in the attempt's order.
+   */
+  questions: [EduQuizAttempt.ResultQuestion]
+}

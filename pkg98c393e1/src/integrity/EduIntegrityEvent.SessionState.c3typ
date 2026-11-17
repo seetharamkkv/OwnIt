@@ -1,0 +1,51 @@
+/**
+ * Lock and tab-switch state of one work session, returned by {@link EduIntegrityEvent#logBatch} and
+ * {@link EduIntegrityEvent#sessionStateMine} so the browser learns about a lock straight away.
+ */
+type EduIntegrityEvent.SessionState {
+
+  /**
+   * Kind of work session.
+   */
+  contextKind: !string enum EduIntegrityEvent.ContextKind
+
+  /**
+   * Submission id or quiz attempt id.
+   */
+  contextId: !string
+
+  /**
+   * Events stored by this call. Always 0 for {@link EduIntegrityEvent#sessionStateMine}.
+   */
+  stored: int
+
+  /**
+   * TAB_HIDDEN events since the last LOCK_RELEASED.
+   */
+  tabSwitchCount: int
+
+  /**
+   * Effective {@link EduIntegrityPolicy#tabSwitchWarnAt}.
+   */
+  warnAt: int
+
+  /**
+   * Effective {@link EduIntegrityPolicy#tabSwitchLockAt}.
+   */
+  lockAt: int
+
+  /**
+   * True when the newest LOCK_TRIGGERED is later than the newest LOCK_RELEASED.
+   */
+  locked: boolean
+
+  /**
+   * Server time of the LOCK_TRIGGERED event, when locked.
+   */
+  lockedAt: datetime
+
+  /**
+   * True when the submission or attempt is no longer open, so nothing more is stored.
+   */
+  closed: boolean
+}

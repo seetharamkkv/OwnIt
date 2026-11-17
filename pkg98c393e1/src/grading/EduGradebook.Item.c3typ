@@ -1,0 +1,43 @@
+/**
+ * A gradebook column: one assignment or quiz.
+ */
+type EduGradebook.Item {
+
+  /**
+   * Assignment or quiz id.
+   */
+  itemId: !string
+
+  /**
+   * Whether the item is an assignment or a quiz.
+   */
+  itemKind: !string enum EduGradebook.ItemKind
+
+  /**
+   * Item title.
+   */
+  title: string
+
+  /**
+   * Maximum score.
+   */
+  maxScore: double
+
+  /**
+   * Due or close date.
+   */
+  dueAt: datetime
+
+  /**
+   * File kind of an assignment ({@link EduAssignment#fileKind}); empty for quizzes. Only `PY` and `IPYNB`
+   * assignments have runnable tests.
+   */
+  fileKind: string enum EduAssignment.FileKind
+
+  /**
+   * When scores were released to students ({@link EduAssignment#gradesReleasedAt}); empty until
+   * {@link EduGradebook#releaseGrades} is called. Always empty for quizzes, whose visibility follows
+   * {@link EduQuiz#showResults}.
+   */
+  gradesReleasedAt: datetime
+}

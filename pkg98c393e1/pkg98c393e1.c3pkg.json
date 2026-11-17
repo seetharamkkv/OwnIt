@@ -1,7 +1,7 @@
 {
-  "author": "Pied Piper",
+  "author": "{{author}}",
   "name": "pkg98c393e1",
-  "description": "OwnIt: a guided homework platform that captures step-by-step work and assembles final submissions.",
+  "description": "{{description}}",
   "dependencies": {
     "mcpServer": "8.10",
     "testtools": "8.10"

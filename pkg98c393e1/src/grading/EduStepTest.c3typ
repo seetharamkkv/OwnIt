@@ -1,0 +1,93 @@
+/**
+ * A Python test for an assignment step or a code quiz question. Every `def test_*()` in {@link #code} is collected,
+ * with the student's code already loaded (PROJECT_PLAN.md section 7.2). Exactly one of {@link #step} and
+ * {@link #question} is set.
+ * Owner: Shreenidhi (tests, grading, and quizzes).
+ */
+@db(index=['step', 'question'])
+entity type EduStepTest {
+
+  /**
+   * Assignment step the test checks.
+   */
+  step: EduAssignmentStep
+
+  /**
+   * Code quiz question the test checks.
+   */
+  question: EduQuizQuestion
+
+  /**
+   * Test name shown in the test panel.
+   */
+  testName: !string
+
+  /**
+   * Python test code.
+   */
+  code: !string
+
+  /**
+   * Who can see the test.
+   */
+  visibility: string enum EduStepTest.Visibility = VISIBLE
+
+  /**
+   * Points for passing.
+   */
+  points: double
+
+  /**
+   * Time limit for the test in milliseconds.
+   */
+  timeoutMs: int = 5000
+
+  /**
+   * Run order within the step.
+   */
+  testOrder: int
+
+  /**
+   * Visible tests for every step of an assignment the caller is enrolled in. Hidden tests are never returned.
+   */
+  visibleTests: function(assignmentId: !string): [EduStepTest] js-server
+
+  /**
+   * All tests (visible and hidden) of an assignment, for regrading in the instructor's browser. Instructor or TA only.
+   */
+  regradeBundle: function(assignmentId: !string): [EduStepTest] js-server
+
+  /**
+   * All tests (visible and hidden) of one step, in {@link #testOrder}, for the test editor in the assignment
+   * builder. Instructor or TA of the course.
+   */
+  stepTests: function(stepId: !string): [EduStepTest] js-server
+
+  /**
+   * Creates or updates a step test from the test editor. {@link #step} must be set; on update the step can't change.
+   * Needs `EDIT_CONTENT` in the step's course. Returns the saved test.
+   */
+  saveForStep: function(test: !EduStepTest): !EduStepTest js-server
+
+  /**
+   * Deletes a step test. Needs `EDIT_CONTENT` in the test's course. Returns true when a test was removed.
+   */
+  removeForStep: function(testId: !string): boolean js-server
+
+  /**
+   * All tests (visible and hidden) of one CODE quiz question, in {@link #testOrder}, for the quiz builder.
+   * Instructor or TA of the course.
+   */
+  questionTests: function(questionId: !string): [EduStepTest] js-server
+
+  /**
+   * Creates or updates a test of a CODE quiz question. {@link #question} must be set and be a CODE question; on update
+   * the question can't change. Needs `EDIT_CONTENT` in the quiz's course. Same checks as {@link #saveForStep}.
+   */
+  saveForQuestion: function(test: !EduStepTest): !EduStepTest js-server
+
+  /**
+   * Deletes a quiz question test. Needs `EDIT_CONTENT`. Returns true when a test was removed.
+   */
+  removeForQuestion: function(testId: !string): boolean js-server
+}

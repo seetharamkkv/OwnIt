@@ -1,0 +1,18 @@
+// Demo quiz (Shreenidhi). Development/test only. Questions are in test/data/EduQuizQuestion, code tests in
+// test/data/EduStepTest/EduStepTest.quiz.json.
+[
+  {
+    "id": "seed_quiz_cs101_q1",
+    "course": { "id": "seed_course_cs101" },
+    "title": "Quiz 1: pandas basics",
+    "instructionsMd": "Six questions on loading and summarising data with **pandas**. You have **15 minutes** and **2 attempts**; your best attempt counts.\n\n- Answers save automatically as you go.\n- For the code question you can run the visible test in your browser before you submit. A hidden test is used for grading.\n- When time runs out the quiz is submitted for you.",
+    "opensAt": "2026-09-01T00:00:00Z",
+    "closesAt": "2027-06-30T23:59:00Z",
+    "timeLimitMin": 15,
+    "attemptsAllowed": 2,
+    "shuffleQuestions": false,
+    "shuffleOptions": true,
+    "showResults": "AFTER_SUBMIT",
+    "status": "PUBLISHED"
+  }
+]

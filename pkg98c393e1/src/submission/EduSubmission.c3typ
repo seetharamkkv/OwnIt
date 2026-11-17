@@ -1,0 +1,137 @@
+/**
+ * One student's work on one assignment.
+ * Owner: Keya (student workspace).
+ */
+@db(unique=['assignment, student'], index=['student'])
+entity type EduSubmission {
+
+  /**
+   * Assignment being worked on.
+   */
+  assignment: !EduAssignment
+
+  /**
+   * Student who owns the submission.
+   */
+  student: !EduUserProfile
+
+  /**
+   * Lifecycle state.
+   */
+  status: string enum EduSubmission.Status = NOT_STARTED
+
+  /**
+   * When the student first opened the assignment.
+   */
+  startedAt: datetime
+
+  /**
+   * When the student submitted.
+   */
+  submittedAt: datetime
+
+  /**
+   * Personal deadline that replaces {@link EduAssignment#dueAt}, granted by an instructor.
+   */
+  extensionUntil: datetime
+
+  /**
+   * URL of the assembled final file, set on submit.
+   */
+  assembledFileUrl: string
+
+  /**
+   * Personal canary token shown in the watermark, set by {@link EduCanary#issueToken}.
+   */
+  canaryToken: string
+
+  /**
+   * Score computed from trusted test runs.
+   */
+  score: double
+
+  /**
+   * Score set by an instructor, which replaces {@link #score} when set.
+   */
+  scoreOverride: double
+
+  /**
+   * True when submitted after the due date or extension.
+   */
+  late: boolean
+
+  /**
+   * Number of WARN or HIGH integrity events, kept up to date by {@link EduIntegrityEvent#logBatch}.
+   */
+  flagCount: int
+
+  /**
+   * The student's answer to each step.
+   */
+  responses: [EduStepResponse](submission)
+
+  /**
+   * Test runs for this submission.
+   */
+  testRuns: [EduTestRun](submission)
+
+  /**
+   * Returns the caller's submission for the assignment, creating it the first time with one {@link EduStepResponse}
+   * per step (holding the step's starter content) and asking {@link EduCanary#issueToken} for a token. Also adds
+   * responses for steps the instructor added later. Safe to call more than once, including from two tabs.
+   * Only enrolled students of a published, released assignment may call it; platform admins get `EDU_FORBIDDEN`
+   * and should use preview mode or a student persona. Returns the same shape as {@link #mySubmission}.
+   */
+  startMine: function(assignmentId: !string): !EduSubmission js-server
+
+  /**
+   * Returns the caller's submission for the assignment, or null when not started. Includes the assignment (title,
+   * description, file kind, dates, test data files, course code and title), the student's name and number, and
+   * {@link #responses} ordered by step, each with the step's title, instructions, starter content, and context.
+   * For IPYNB assignments it also includes {@link EduAssignment#templateContent} so the notebook editor can draw
+   * every cell. Hidden tests are never included.
+   */
+  mySubmission: function(assignmentId: !string): EduSubmission js-server
+
+  /**
+   * Hands in the caller's submission: sets status SUBMITTED, {@link #submittedAt} and {@link #late} (after the due
+   * date or extension), then calls {@link EduAssembler#assemble} and {@link EduCanary#detect}. Assembly or canary
+   * failures are logged and do not undo the submit; {@link EduAssembler#downloadLink} assembles again when needed.
+   * Throws `EDU_DEADLINE_PASSED` after the last allowed moment (see {@link EduSubmission.EditContext}), and
+   * `EDU_LOCKED` while the integrity layer has frozen the session ({@link EduIntegrityEvent#assertNotLocked}). Calling it
+   * on an already submitted submission returns it unchanged. Returns the same shape as {@link #mySubmission}.
+   */
+  submitMine: function(assignmentId: !string): !EduSubmission js-server
+
+  /**
+   * The caller's published, released assignments in a course with their status and step progress, ordered by due
+   * date, for the student's course page. Any active member of the course may call it.
+   */
+  myAssignments: function(courseId: !string): [EduSubmission.MyAssignmentRow] js-server
+
+  /**
+   * The caller's home page data across every active course where they are a student: open assignments and
+   * quizzes, summary counts, and recently released grades. Students only; staff get an empty dashboard.
+   */
+  myDashboard: function(): !EduSubmission.Dashboard js-server
+
+  /**
+   * Shared guard for the student's write methods ({@link EduStepResponse#saveMine},
+   * {@link EduStepResponse#setCompletedMine}): checks that the caller is an enrolled student, the assignment is
+   * open, the submission exists and is not handed in, and the last allowed moment (the latest of
+   * {@link #extensionUntil}, {@link EduAssignment#lateUntil} and {@link EduAssignment#dueAt}) has not passed, and
+   * the session is not frozen by the integrity layer ({@link EduIntegrityEvent#assertNotLocked}).
+   * Throws `EDU_FORBIDDEN`, `EDU_NOT_FOUND`, `EDU_DEADLINE_PASSED` or `EDU_LOCKED`; otherwise returns the submission it found.
+   */
+  requireEditable: function(stepId: !string): !EduSubmission.EditContext js-server
+
+  /**
+   * Gives one student a personal deadline for an assignment ({@link #extensionUntil}), or removes it when `until` is
+   * unset. Creates a NOT_STARTED submission when the student has not opened the assignment yet, so the extension is
+   * waiting for them. `until` must be after {@link EduAssignment#dueAt}. Needs
+   * {@link EduCourse.Permission#GRANT_EXTENSIONS} in the course, the student must be an active STUDENT there, and a
+   * handed-in submission can't be extended (`EDU_VALIDATION`). Writes an `extension.grant` or `extension.clear`
+   * {@link EduAuditLog} entry with `reason`. Returns the submission's id, status, extension, and student.
+   */
+  grantExtension: function(assignmentId: !string, studentId: !string, reason: !string, until: datetime): !EduSubmission js-server
+}

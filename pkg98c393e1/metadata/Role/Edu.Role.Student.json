@@ -1,0 +1,30 @@
+{
+  "id": "Edu.Role.Student",
+  "description": "Student: completes assignments and quizzes in enrolled courses through the *Mine server methods only.",
+  "nestedRoles": [],
+  "permissions": [
+    "allow:EduSession::me",
+    "allow:EduEnrollment::myPermissions",
+    "allow:EduCourse::get",
+    "allow:EduSubmission::startMine",
+    "allow:EduSubmission::mySubmission",
+    "allow:EduSubmission::submitMine",
+    "allow:EduSubmission::myAssignments",
+    "allow:EduSubmission::myDashboard",
+    "allow:EduStepResponse::saveMine",
+    "allow:EduStepResponse::setCompletedMine",
+    "allow:EduAssembler::downloadLink",
+    "allow:EduIntegrityPolicy::forContext",
+    "allow:EduIntegrityEvent::logBatch",
+    "allow:EduIntegrityEvent::sessionStateMine",
+    "allow:EduStepTest::visibleTests",
+    "allow:EduTestRun::recordMine",
+    "allow:EduQuiz::myQuizzes",
+    "allow:EduQuiz::myQuiz",
+    "allow:EduQuizAttempt::startMine",
+    "allow:EduQuizAttempt::saveAnswerMine",
+    "allow:EduQuizAttempt::submitMine",
+    "allow:EduQuizAttempt::resultMine"
+  ],
+  "dataPermissions": []
+}

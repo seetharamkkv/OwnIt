@@ -1,0 +1,87 @@
+/**
+ * What happened in an integrity event.
+ */
+enum type EduIntegrityEvent.EventKind {
+  /**
+   * A paste from outside the app was blocked.
+   */
+  PASTE_BLOCKED
+  /**
+   * Text copied inside the app was pasted.
+   */
+  PASTE_INTERNAL
+  /**
+   * A paste from outside the app was allowed and logged (LOG_ONLY mode).
+   */
+  PASTE_EXTERNAL_LOGGED
+  /**
+   * Text dragged in from outside the app was blocked.
+   */
+  DROP_BLOCKED
+  /**
+   * Copying from the instructions panel was blocked.
+   */
+  COPY_BLOCKED
+  /**
+   * The right-click menu was blocked.
+   */
+  CONTEXT_MENU_BLOCKED
+  /**
+   * A large change appeared without an in-app paste.
+   */
+  LARGE_INSERT
+  /**
+   * The student left full screen.
+   */
+  FULLSCREEN_EXIT
+  /**
+   * The student entered full screen.
+   */
+  FULLSCREEN_ENTER
+  /**
+   * The tab was hidden (student switched tab or app).
+   */
+  TAB_HIDDEN
+  /**
+   * The tab became visible again.
+   */
+  TAB_VISIBLE
+  /**
+   * The browser window lost focus.
+   */
+  WINDOW_BLUR
+  /**
+   * Developer tools look open (weak signal).
+   */
+  DEVTOOLS_SUSPECTED
+  /**
+   * The submission contains the student's canary token.
+   */
+  CANARY_MATCH
+  /**
+   * A work session started.
+   */
+  SESSION_START
+  /**
+   * A work session ended.
+   */
+  SESSION_END
+  /**
+   * Work was frozen after too many tab switches.
+   */
+  LOCK_TRIGGERED
+  /**
+   * An instructor unfroze the work.
+   */
+  LOCK_RELEASED
+  /**
+   * The Print Screen key was pressed, or a known screenshot shortcut, while the work was shown. The clipboard was
+   * cleared and the work hidden briefly. `details.count` is the number of attempts in this session.
+   */
+  SCREENSHOT_ATTEMPT
+  /**
+   * The student tried to print or save the page (Ctrl/Cmd+P, Ctrl/Cmd+S, or the browser's print command).
+   * The print was cancelled and the printed page is blank.
+   */
+  PRINT_BLOCKED
+}

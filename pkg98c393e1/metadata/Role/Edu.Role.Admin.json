@@ -1,0 +1,21 @@
+{
+  "id": "Edu.Role.Admin",
+  "description": "Platform admin: users, courses, platform integrity defaults, audit log, data retention, feature flags.",
+  "nestedRoles": ["Edu.Role.Instructor"],
+  "permissions": [
+    "allow:EduSession::setDevPersona",
+    "allow:EduUserProfile:write:",
+    "allow:EduUserProfile::setPlatformRole",
+    "allow:EduCourse:write:",
+    "allow:EduEnrollment:write:",
+    "allow:EduEnrollment:delete:",
+    "allow:EduAuditLog:read:",
+    "allow:EduPlatformConfig::*",
+    "allow:EduIntegrityEvent::platformReport",
+    "allow:EduAdmin::platformStats",
+    "allow:EduAdmin::purgeExpiredIntegrityEvents",
+    "allow:EduAdmin::exportCourseData",
+    "allow:EduAdmin::deleteStudentData"
+  ],
+  "dataPermissions": []
+}

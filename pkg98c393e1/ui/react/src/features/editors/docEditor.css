@@ -1,0 +1,96 @@
+/*
+ * Page and prose styles for DocEditor (Tailwind's preflight removes default document styles). Owner: Keya.
+ */
+.edu-doc-page {
+  min-height: 480px;
+  padding: 48px 64px;
+  color: var(--c3-style-basic-fg-primary);
+  font-family: Calibri, Carlito, 'Segoe UI', Arial, sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+}
+.edu-doc-context {
+  color: var(--c3-style-basic-fg-secondary);
+  user-select: text;
+}
+.edu-doc-answer-frame {
+  margin: var(--c3-style-spacing-12) calc(-1 * var(--c3-style-spacing-12));
+  padding: var(--c3-style-spacing-8) var(--c3-style-spacing-12);
+  border: 2px dashed var(--c3-style-basic-border-accent);
+  border-radius: var(--c3-style-border-radius-4);
+}
+.edu-doc-answer-frame--readonly {
+  border-style: solid;
+  border-color: var(--c3-style-basic-border-border);
+}
+.edu-doc-answer {
+  min-height: 160px;
+  outline: none;
+}
+.edu-doc-page p,
+.edu-doc-page ul,
+.edu-doc-page ol,
+.edu-doc-page pre,
+.edu-doc-page table,
+.edu-doc-page h1,
+.edu-doc-page h2,
+.edu-doc-page h3 {
+  margin: 0 0 var(--c3-style-spacing-8);
+}
+.edu-doc-page h1 {
+  font-size: 1.6em;
+  font-weight: 600;
+}
+.edu-doc-page h2 {
+  font-size: 1.3em;
+  font-weight: 600;
+}
+.edu-doc-page h3 {
+  font-size: 1.1em;
+  font-weight: 600;
+}
+.edu-doc-page ul {
+  list-style: disc;
+  padding-left: 1.5em;
+}
+.edu-doc-page ol {
+  list-style: decimal;
+  padding-left: 1.5em;
+}
+.edu-doc-page pre {
+  padding: var(--c3-style-spacing-8);
+  background: var(--c3-style-basic-bg-secondary);
+  border-radius: var(--c3-style-border-radius-4);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 13px;
+  white-space: pre-wrap;
+}
+.edu-doc-page code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+.edu-doc-page table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.edu-doc-page th,
+.edu-doc-page td {
+  padding: 4px 8px;
+  border: 1px solid var(--c3-style-basic-border-border);
+  vertical-align: top;
+}
+.edu-doc-page th {
+  background: var(--c3-style-basic-bg-secondary);
+  font-weight: 600;
+}
+.edu-doc-page .selectedCell {
+  background: var(--c3-style-basic-bg-selected);
+}
+/* TipTap Placeholder: shows its text on the first empty paragraph. */
+.edu-doc-answer p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  color: var(--c3-style-basic-fg-secondary);
+}

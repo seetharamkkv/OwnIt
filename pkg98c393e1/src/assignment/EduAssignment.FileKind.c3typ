@@ -1,0 +1,17 @@
+/**
+ * Kind of homework file an assignment produces, which also picks the editor students see.
+ */
+enum type EduAssignment.FileKind {
+  /**
+   * A Python script, edited in a code editor.
+   */
+  PY
+  /**
+   * A Jupyter notebook, edited as notebook cells.
+   */
+  IPYNB
+  /**
+   * A Word document, edited in a page-style rich text editor.
+   */
+  DOCX
+}

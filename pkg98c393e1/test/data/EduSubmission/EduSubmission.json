@@ -1,0 +1,36 @@
+// Demo submissions (Rohith, for assembly testing). Sam Student has answered HW1 steps 1-2 and Lab 1 step 1.
+[
+  {
+    "id": "seed_submission_cs101_hw1_student01",
+    "assignment": {
+      "id": "seed_assignment_cs101_hw1"
+    },
+    "student": {
+      "id": "seed_user_student01"
+    },
+    "status": "IN_PROGRESS",
+    "startedAt": "2026-11-15T14:00:00Z"
+  },
+  {
+    "id": "seed_submission_ds201_lab1_student01",
+    "assignment": {
+      "id": "seed_assignment_ds201_lab1"
+    },
+    "student": {
+      "id": "seed_user_student01"
+    },
+    "status": "IN_PROGRESS",
+    "startedAt": "2026-11-16T10:00:00Z"
+  },
+  {
+    "id": "seed_submission_ds201_report1_student01",
+    "assignment": {
+      "id": "seed_assignment_ds201_report1"
+    },
+    "student": {
+      "id": "seed_user_student01"
+    },
+    "status": "IN_PROGRESS",
+    "startedAt": "2026-11-17T09:00:00Z"
+  }
+]

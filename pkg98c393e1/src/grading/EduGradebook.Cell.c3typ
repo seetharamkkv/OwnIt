@@ -1,0 +1,46 @@
+/**
+ * One student's result for one item.
+ */
+type EduGradebook.Cell {
+
+  /**
+   * Assignment or quiz id.
+   */
+  itemId: !string
+
+  /**
+   * Submission or quiz attempt id, when there is one.
+   */
+  workId: string
+
+  /**
+   * Effective score: {@link EduSubmission#scoreOverride} when set, otherwise {@link EduSubmission#score}
+   * (quizzes: the best submitted attempt's {@link EduQuizAttempt#score}).
+   */
+  score: double
+
+  /**
+   * Score computed from trusted test runs ({@link EduSubmission#score}), before any override.
+   */
+  autoScore: double
+
+  /**
+   * True when an instructor override ({@link EduSubmission#scoreOverride}) replaces the computed score.
+   */
+  overridden: boolean
+
+  /**
+   * True when submitted late.
+   */
+  late: boolean
+
+  /**
+   * WARN or HIGH integrity events for this work ({@link EduSubmission#flagCount}).
+   */
+  flagCount: int
+
+  /**
+   * Submission or attempt status name, for example `SUBMITTED`; `NOT_STARTED` when there is no {@link #workId}.
+   */
+  status: string
+}

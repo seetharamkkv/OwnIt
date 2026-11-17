@@ -1,0 +1,57 @@
+/**
+ * One run of a step's tests for a submission. The run time is `meta.created`.
+ * Owner: Shreenidhi (tests, grading, and quizzes).
+ */
+@db(index=['submission, step'])
+entity type EduTestRun {
+
+  /**
+   * Submission that was tested.
+   */
+  submission: !EduSubmission
+
+  /**
+   * Step that was tested.
+   */
+  step: !EduAssignmentStep
+
+  /**
+   * Where the run happened.
+   */
+  mode: !string enum EduTestRun.Mode
+
+  /**
+   * Result of each test.
+   */
+  results: [EduTestResult]
+
+  /**
+   * Tests that passed.
+   */
+  passedCount: int
+
+  /**
+   * Tests that ran.
+   */
+  totalCount: int
+
+  /**
+   * True for SERVER and INSTRUCTOR_REGRADE runs, the only runs that count toward the grade.
+   */
+  trusted: boolean
+
+  /**
+   * Saves a browser run of visible tests for the caller's own submission (not trusted) and updates
+   * {@link EduStepResponse#lastVisibleResult}.
+   */
+  recordMine: function(stepId: !string, results: ![EduTestResult]): !EduTestRun js-server
+
+  /**
+   * Saves a trusted regrade run (mode INSTRUCTOR_REGRADE) done in an instructor's browser with visible and hidden
+   * tests, then recomputes and saves {@link EduSubmission#score} with {@link EduGradebook#computeScore} (status
+   * SUBMITTED becomes GRADED). Only results for tests of `stepId` are kept and the pass counts are recounted. The
+   * step must belong to the submission's assignment. Needs {@link EduCourse.Permission#EDIT_GRADES}. Writes a
+   * `grade.regrade` {@link EduAuditLog} when the score changes.
+   */
+  recordRegrade: function(submissionId: !string, stepId: !string, results: ![EduTestResult]): !EduTestRun js-server
+}

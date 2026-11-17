@@ -1,0 +1,21 @@
+// Demo enrollments. Development/test only.
+[
+  { "id": "seed_enrollment_cs101_instructor1", "course": { "id": "seed_course_cs101" }, "person": { "id": "seed_user_instructor1" }, "courseRole": "INSTRUCTOR" },
+  { "id": "seed_enrollment_ds201_instructor1", "course": { "id": "seed_course_ds201" }, "person": { "id": "seed_user_instructor1" }, "courseRole": "INSTRUCTOR" },
+  { "id": "seed_enrollment_cs101_ta1", "course": { "id": "seed_course_cs101" }, "person": { "id": "seed_user_ta1" }, "courseRole": "TA" },
+  { "id": "seed_enrollment_cs101_student01", "course": { "id": "seed_course_cs101" }, "person": { "id": "seed_user_student01" }, "courseRole": "STUDENT" },
+  { "id": "seed_enrollment_cs101_student02", "course": { "id": "seed_course_cs101" }, "person": { "id": "seed_user_student02" }, "courseRole": "STUDENT" },
+  { "id": "seed_enrollment_cs101_student03", "course": { "id": "seed_course_cs101" }, "person": { "id": "seed_user_student03" }, "courseRole": "STUDENT" },
+  { "id": "seed_enrollment_cs101_student04", "course": { "id": "seed_course_cs101" }, "person": { "id": "seed_user_student04" }, "courseRole": "STUDENT" },
+  { "id": "seed_enrollment_cs101_student05", "course": { "id": "seed_course_cs101" }, "person": { "id": "seed_user_student05" }, "courseRole": "STUDENT" },
+  { "id": "seed_enrollment_cs101_student06", "course": { "id": "seed_course_cs101" }, "person": { "id": "seed_user_student06" }, "courseRole": "STUDENT" },
+  { "id": "seed_enrollment_cs101_student07", "course": { "id": "seed_course_cs101" }, "person": { "id": "seed_user_student07" }, "courseRole": "STUDENT" },
+  { "id": "seed_enrollment_cs101_student08", "course": { "id": "seed_course_cs101" }, "person": { "id": "seed_user_student08" }, "courseRole": "STUDENT" },
+  { "id": "seed_enrollment_cs101_student09", "course": { "id": "seed_course_cs101" }, "person": { "id": "seed_user_student09" }, "courseRole": "STUDENT" },
+  { "id": "seed_enrollment_cs101_student10", "course": { "id": "seed_course_cs101" }, "person": { "id": "seed_user_student10" }, "courseRole": "STUDENT" },
+  { "id": "seed_enrollment_ds201_student01", "course": { "id": "seed_course_ds201" }, "person": { "id": "seed_user_student01" }, "courseRole": "STUDENT" },
+  { "id": "seed_enrollment_ds201_student02", "course": { "id": "seed_course_ds201" }, "person": { "id": "seed_user_student02" }, "courseRole": "STUDENT" },
+  { "id": "seed_enrollment_ds201_student03", "course": { "id": "seed_course_ds201" }, "person": { "id": "seed_user_student03" }, "courseRole": "STUDENT" },
+  { "id": "seed_enrollment_ds201_student04", "course": { "id": "seed_course_ds201" }, "person": { "id": "seed_user_student04" }, "courseRole": "STUDENT" },
+  { "id": "seed_enrollment_ds201_student05", "course": { "id": "seed_course_ds201" }, "person": { "id": "seed_user_student05" }, "courseRole": "STUDENT" }
+]

@@ -1,0 +1,34 @@
+/**
+ * Test data files of an assignment (for example `data/sales.csv`), stored under `edu/testdata/<assignmentId>/` and
+ * listed in {@link EduAssignment#testDataFiles}. The browser test runner writes them into its file system.
+ * Owner: Rohith (assignment engine).
+ */
+type EduAssignment.Files {
+
+  /**
+   * Largest test data file accepted, in bytes.
+   */
+  MAX_FILE_BYTES: const int = 5242880
+
+  /**
+   * Most test data files one assignment may have.
+   */
+  MAX_FILES: const int = 20
+
+  /**
+   * Stores one test data file, replacing a file with the same name, and returns the assignment's file list.
+   * `fileName` is the path the tests open, for example `data/sales.csv`. Instructor or TA only.
+   */
+  uploadTestData: function(assignmentId: !string, fileName: !string, contentBase64: !string): ![EduAttachment] py
+
+  /**
+   * Deletes one test data file and returns the assignment's file list. Instructor or TA only.
+   */
+  removeTestData: function(assignmentId: !string, fileName: !string): ![EduAttachment] py
+
+  /**
+   * Contents of every test data file, for the browser test runner. Course staff, or students enrolled in the course
+   * once the assignment is published.
+   */
+  readTestData: function(assignmentId: !string): ![EduAttachment.Content] py
+}

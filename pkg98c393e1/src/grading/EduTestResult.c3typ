@@ -1,0 +1,35 @@
+/**
+ * Result of one test.
+ */
+type EduTestResult {
+
+  /**
+   * Id of the {@link EduStepTest}.
+   */
+  testId: !string
+
+  /**
+   * Name of the test function or test.
+   */
+  testName: string
+
+  /**
+   * True when the test passed.
+   */
+  passed: boolean
+
+  /**
+   * Assertion or error message when it failed.
+   */
+  message: string
+
+  /**
+   * Captured standard output.
+   */
+  stdout: string
+
+  /**
+   * Run time in milliseconds.
+   */
+  durationMs: int
+}

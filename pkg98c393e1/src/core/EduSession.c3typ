@@ -1,0 +1,25 @@
+/**
+ * Who is calling: the effective user id every Edu server method uses, plus the dev persona switcher.
+ * Owner: Shreya (core and admin).
+ */
+type EduSession {
+
+  /**
+   * Id of the effective user. Normally the caller's {@link User} id. When the `devPersonas` flag is on and the real
+   * caller is an Edu admin with {@link EduUserProfile#devPersonaId} set, it is that persona's id.
+   * Server methods call this instead of `User.myUser()`.
+   */
+  currentUserId: function(): !string js-server
+
+  /**
+   * The effective user's profile, course memberships, and enabled feature flags. Creates a profile for a first-time
+   * user (ADMIN for environment admins, STUDENT otherwise). The React app calls this on load.
+   */
+  me: function(): !EduSession.Me js-server
+
+  /**
+   * Switches the admin caller to act as a demo persona, or back to themselves when `personaId` is empty.
+   * Requires the `devPersonas` flag and a real Edu admin caller.
+   */
+  setDevPersona: function(personaId: string): !EduSession.Me js-server
+}

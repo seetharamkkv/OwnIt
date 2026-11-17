@@ -1,0 +1,18 @@
+/**
+ * Canary tokens: a personal instruction in the watermark that, if an AI tool follows it, leaves a trace in the work.
+ * Owner: Seetharam (integrity).
+ */
+type EduCanary {
+
+  /**
+   * Creates (or returns the existing) canary token for a submission, for example `qz_7f3a`, and stores it on
+   * {@link EduSubmission#canaryToken}.
+   */
+  issueToken: function(submissionId: !string): !string js-server
+
+  /**
+   * Looks for the submission's canary token in its step answers, logs a CANARY_MATCH event when found, and returns
+   * whether it was found. Called on submit.
+   */
+  detect: function(submissionId: !string): boolean js-server
+}

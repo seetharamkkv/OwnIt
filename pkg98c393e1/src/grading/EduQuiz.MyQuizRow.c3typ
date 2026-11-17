@@ -1,0 +1,122 @@
+/**
+ * A quiz as one student sees it in a course's quiz list and on the quiz start screen: settings without questions,
+ * plus the caller's attempt summary. Returned by {@link EduQuiz#myQuizzes} and {@link EduQuiz#myQuiz}.
+ */
+type EduQuiz.MyQuizRow {
+
+  /**
+   * Quiz id.
+   */
+  quizId: !string
+
+  /**
+   * Course id.
+   */
+  courseId: string
+
+  /**
+   * Course code, for the watermark.
+   */
+  courseCode: string
+
+  /**
+   * Quiz title.
+   */
+  title: string
+
+  /**
+   * Instructions in Markdown.
+   */
+  instructionsMd: string
+
+  /**
+   * {@link EduQuiz#status}: PUBLISHED or CLOSED.
+   */
+  status: string enum EduQuiz.Status
+
+  /**
+   * When students can start.
+   */
+  opensAt: datetime
+
+  /**
+   * When the quiz stops accepting attempts.
+   */
+  closesAt: datetime
+
+  /**
+   * Time limit in minutes, before accommodations. Unset means no limit.
+   */
+  timeLimitMin: int
+
+  /**
+   * The caller's extra time from {@link EduEnrollment.Accommodation#extraTimePct}, as a percentage.
+   */
+  extraTimePct: int
+
+  /**
+   * Time limit with extra time applied, in minutes (not capped at {@link #closesAt}).
+   */
+  effectiveTimeLimitMin: double
+
+  /**
+   * Attempts each student may make.
+   */
+  attemptsAllowed: int
+
+  /**
+   * Attempts the caller has started, including one in progress.
+   */
+  attemptsUsed: int
+
+  /**
+   * Id of the caller's attempt in progress, if any.
+   */
+  openAttemptId: string
+
+  /**
+   * Deadline of the attempt in progress.
+   */
+  openAttemptDeadlineAt: datetime
+
+  /**
+   * Id of the caller's newest submitted attempt, for the results screen.
+   */
+  lastAttemptId: string
+
+  /**
+   * Questions per attempt: {@link EduQuiz#questionsPerAttempt}, or the pool size.
+   */
+  questionCount: int
+
+  /**
+   * Maximum score: the pool's total points, or unset when questions are drawn from a pool
+   * ({@link EduQuiz#questionsPerAttempt} set), because each attempt then has its own maximum.
+   */
+  maxScore: double
+
+  /**
+   * When students see results ({@link EduQuiz.ResultsVisibility}).
+   */
+  showResults: string enum EduQuiz.ResultsVisibility
+
+  /**
+   * True when results of submitted attempts are visible to the caller now.
+   */
+  resultsVisible: boolean
+
+  /**
+   * Best score over submitted attempts. Set only when {@link #resultsVisible}.
+   */
+  bestScore: double
+
+  /**
+   * True when the caller can start a new attempt or resume one now. Always false for staff and admins.
+   */
+  canStart: boolean
+
+  /**
+   * Why {@link #canStart} is false, for example `Opens 2026-12-01` or `No attempts left`.
+   */
+  unavailableReason: string
+}

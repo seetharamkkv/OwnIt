@@ -1,0 +1,17 @@
+/**
+ * How serious an integrity event is.
+ */
+enum type EduIntegrityEvent.Severity {
+  /**
+   * Context only, such as session start or an in-app paste.
+   */
+  INFO
+  /**
+   * Worth a look, such as a blocked paste or a tab switch.
+   */
+  WARN
+  /**
+   * Strong signal, such as a canary match.
+   */
+  HIGH
+}

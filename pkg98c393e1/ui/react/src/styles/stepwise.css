@@ -1,0 +1,66 @@
+/*
+ * Stepwise student theme. Palette from the Student UI mockups (resource/mockups/STUDENT_UI_MOCKUPS.md).
+ * Scoped under `.stepwise` so student pages render dark regardless of the design-system theme.
+ * Use these variables through Tailwind arbitrary values, e.g. `bg-[var(--sw-card)]`.
+ */
+.stepwise {
+  --sw-bg: #0b0b0d;
+  --sw-bg-elevated: #0e0e11;
+  --sw-card: #141417;
+  --sw-card-2: #111114;
+  --sw-input: #0f0f12;
+  --sw-border: #222227;
+  --sw-border-strong: #2e2e34;
+  --sw-row-hover: #1a1a1f;
+  --sw-fg: #ededef;
+  --sw-fg-2: #d4d4d8;
+  --sw-fg-muted: #a1a1aa;
+  --sw-fg-faint: #8e8e99;
+  --sw-fg-dim: #5e5e68;
+  --sw-track: #2a2a30;
+
+  --sw-accent: #8b7cf6;
+  --sw-accent-soft: #c4b5fd;
+  --sw-accent-bg: #1e1a33;
+  --sw-accent-card: #141320;
+  --sw-accent-border: #2e2a44;
+  --sw-accent-strong: #5b4fb0;
+
+  --sw-success: #34d399;
+  --sw-success-bg: #0f2a20;
+  --sw-warn: #fbbf24;
+  --sw-warn-bg: #2a2110;
+  --sw-warn-border: #3a2a12;
+  --sw-warn-card: #1a1510;
+  --sw-danger: #f87171;
+  --sw-danger-bg: #2a1215;
+
+  --sw-kind-py: #60a5fa;
+  --sw-kind-py-bg: #13233a;
+  --sw-kind-ipynb: #fb923c;
+  --sw-kind-ipynb-bg: #2e1d10;
+  --sw-kind-docx: #38bdf8;
+  --sw-kind-docx-bg: #0f2633;
+  --sw-kind-quiz: #f472b6;
+  --sw-kind-quiz-bg: #2e1324;
+  --sw-kind-tex: #4ade80;
+  --sw-kind-tex-bg: #0f2a1a;
+
+  --sw-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  background: var(--sw-bg);
+  color: var(--sw-fg);
+  color-scheme: dark;
+}
+
+.stepwise a {
+  color: var(--sw-accent-soft);
+}
+
+.stepwise .sw-row:hover {
+  background: var(--sw-row-hover);
+}
+
+.stepwise .sw-nav:hover {
+  color: var(--sw-fg);
+}

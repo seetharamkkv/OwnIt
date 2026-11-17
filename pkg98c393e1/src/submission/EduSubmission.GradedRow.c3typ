@@ -1,0 +1,41 @@
+/**
+ * A graded item on the student's home page, returned inside {@link EduSubmission.Dashboard#recentlyGraded}.
+ * Only items whose grades are visible to the student appear here.
+ */
+type EduSubmission.GradedRow {
+
+  /**
+   * `ASSIGNMENT` or `QUIZ`.
+   */
+  itemKind: !string
+
+  /**
+   * Assignment id or quiz id.
+   */
+  itemId: !string
+
+  /**
+   * Item title.
+   */
+  title: string
+
+  /**
+   * Course code.
+   */
+  courseCode: string
+
+  /**
+   * The student's score.
+   */
+  score: double
+
+  /**
+   * Maximum score of the item.
+   */
+  maxScore: double
+
+  /**
+   * When the grade became visible: {@link EduAssignment#gradesReleasedAt}, or the quiz's close or submit time.
+   */
+  gradedAt: datetime
+}

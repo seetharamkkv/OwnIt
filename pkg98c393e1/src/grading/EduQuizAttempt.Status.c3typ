@@ -1,0 +1,17 @@
+/**
+ * Where a quiz attempt is in its lifecycle.
+ */
+enum type EduQuizAttempt.Status {
+  /**
+   * The student is answering.
+   */
+  IN_PROGRESS
+  /**
+   * Submitted by the student or automatically at the deadline.
+   */
+  SUBMITTED
+  /**
+   * Every answer has a score.
+   */
+  GRADED
+}

@@ -1,0 +1,15 @@
+/**
+ * One option of a choice question.
+ */
+type EduQuizOption {
+
+  /**
+   * Option id, unique within the question.
+   */
+  optionId: !string
+
+  /**
+   * Option text (Markdown).
+   */
+  label: !string
+}

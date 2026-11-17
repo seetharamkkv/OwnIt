@@ -1,0 +1,13 @@
+/**
+ * Who can see a test.
+ */
+enum type EduStepTest.Visibility {
+  /**
+   * Students see and run it in the browser for feedback.
+   */
+  VISIBLE
+  /**
+   * Never sent to students; run only for trusted grading.
+   */
+  HIDDEN
+}

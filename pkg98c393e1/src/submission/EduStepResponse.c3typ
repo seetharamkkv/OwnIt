@@ -1,0 +1,58 @@
+/**
+ * A student's answer to one step. The last save time is `meta.updated`.
+ * Owner: Keya (student workspace).
+ */
+@db(unique=['submission, step'])
+entity type EduStepResponse {
+
+  /**
+   * Submission the answer belongs to.
+   */
+  submission: !EduSubmission
+
+  /**
+   * Step being answered.
+   */
+  step: !EduAssignmentStep
+
+  /**
+   * Answer content: code, or HTML for DOCX.
+   */
+  content: string
+
+  /**
+   * Format of {@link #content}.
+   */
+  contentFormat: string enum EduStepResponse.ContentFormat = TEXT
+
+  /**
+   * Save counter. {@link #saveMine} rejects a save whose revision is behind, so two tabs cannot overwrite each other.
+   */
+  revision: int
+
+  /**
+   * True when the student marked the step done.
+   */
+  completed: boolean
+
+  /**
+   * Result of the latest visible-test run, shown in the step list.
+   */
+  lastVisibleResult: EduTestSummary
+
+  /**
+   * Saves the caller's answer for a step and returns it with `revision + 1`. `revision` is the revision the browser
+   * last loaded; a stale one throws `EDU_REVISION_CONFLICT` so two tabs cannot overwrite each other. Also throws
+   * `EDU_DEADLINE_PASSED` after the last allowed moment or once submitted (see {@link EduSubmission#requireEditable}),
+   * and `EDU_VALIDATION` for content over 200,000 characters. HTML (DOCX) content is stripped of scripts, styles,
+   * event handlers and `javascript:` links. The first save moves the submission from NOT_STARTED to IN_PROGRESS.
+   */
+  saveMine: function(stepId: !string, content: !string, revision: !int): !EduStepResponse js-server
+
+  /**
+   * Marks the caller's answer for a step done (or not done) for the step list and
+   * {@link EduSubmission#myAssignments} progress. Same checks as {@link #saveMine}, without a revision check;
+   * {@link #revision} is unchanged.
+   */
+  setCompletedMine: function(stepId: !string, completed: !boolean): !EduStepResponse js-server
+}

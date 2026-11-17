@@ -1,0 +1,21 @@
+/**
+ * What happens when a student pastes text that was not copied inside the app.
+ */
+enum type EduIntegrityPolicy.PasteMode {
+  /**
+   * Block the paste and show a message; nothing is logged.
+   */
+  BLOCK
+  /**
+   * Block the paste and log an integrity event.
+   */
+  BLOCK_AND_LOG
+  /**
+   * Allow the paste and log an integrity event.
+   */
+  LOG_ONLY
+  /**
+   * Allow the paste without logging.
+   */
+  ALLOW
+}

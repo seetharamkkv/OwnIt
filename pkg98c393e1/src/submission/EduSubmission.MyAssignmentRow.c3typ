@@ -1,0 +1,112 @@
+/**
+ * One assignment in a student's list, returned by {@link EduSubmission#myAssignments} and
+ * {@link EduSubmission#myDashboard}. Scores appear only after the instructor releases grades
+ * ({@link EduAssignment#gradesReleasedAt}); visible-test feedback is always shown.
+ */
+type EduSubmission.MyAssignmentRow {
+
+  /**
+   * Assignment id.
+   */
+  assignmentId: !string
+
+  /**
+   * Assignment title.
+   */
+  title: string
+
+  /**
+   * File kind of the assignment.
+   */
+  fileKind: string enum EduAssignment.FileKind
+
+  /**
+   * Id of the course the assignment belongs to.
+   */
+  courseId: string
+
+  /**
+   * Course code, for example `CS101-F26`, for cross-course lists.
+   */
+  courseCode: string
+
+  /**
+   * Course title.
+   */
+  courseTitle: string
+
+  /**
+   * When the assignment became visible to students.
+   */
+  releaseAt: datetime
+
+  /**
+   * Effective due date (extension if granted).
+   */
+  dueAt: datetime
+
+  /**
+   * Last moment late work is accepted, from {@link EduAssignment#lateUntil}. Unset means no late window.
+   */
+  lateUntil: datetime
+
+  /**
+   * Percentage taken off a late submission, from {@link EduAssignment#latePenaltyPct}.
+   */
+  latePenaltyPct: double
+
+  /**
+   * Submission state, NOT_STARTED when there is no submission yet.
+   */
+  status: string enum EduSubmission.Status
+
+  /**
+   * When the student handed the work in.
+   */
+  submittedAt: datetime
+
+  /**
+   * Steps marked complete.
+   */
+  completedSteps: int
+
+  /**
+   * Total steps in the assignment.
+   */
+  totalSteps: int
+
+  /**
+   * Sum of step points, the maximum score.
+   */
+  totalPoints: double
+
+  /**
+   * Order of the first step not yet marked complete, for a "continue step N" link. Unset when every step is done.
+   */
+  nextStepOrder: int
+
+  /**
+   * Title of the step at {@link #nextStepOrder}.
+   */
+  nextStepTitle: string
+
+  /**
+   * Number of visible tests failing in the student's latest browser runs, summed over steps. Feedback only.
+   */
+  failingVisibleTests: int
+
+  /**
+   * True when submitted late.
+   */
+  late: boolean
+
+  /**
+   * When grades for this assignment were released to students. Unset means {@link #score} is withheld.
+   */
+  gradesReleasedAt: datetime
+
+  /**
+   * The student's score (override when set), only after grades are released.
+   */
+  score: double
+}

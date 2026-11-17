@@ -1,0 +1,40 @@
+/**
+ * A privileged course action whose availability to TAs is decided per course by {@link EduCourse#taPermissions}.
+ * Instructors always hold every permission in their course; platform admins hold them everywhere.
+ * Checked on the server by {@link EduEnrollment#requireCoursePermission}.
+ */
+enum type EduCourse.Permission {
+  /**
+   * Create or edit assignments, steps, tests and quizzes while they are drafts.
+   */
+  EDIT_CONTENT
+  /**
+   * Publish or close assignments and quizzes so students can or can no longer see them.
+   */
+  PUBLISH_CONTENT
+  /**
+   * Set or change a score ({@link EduGradebook#overrideScore}, manual quiz grading).
+   */
+  EDIT_GRADES
+  /**
+   * Release grades to students ({@link EduAssignment#gradesReleasedAt}).
+   */
+  RELEASE_GRADES
+  /**
+   * Grant a per-student extension ({@link EduSubmission#extensionUntil}) or accommodation
+   * ({@link EduEnrollment#accommodation}).
+   */
+  GRANT_EXTENSIONS
+  /**
+   * Open the course integrity dashboard and a student's integrity timeline.
+   */
+  VIEW_INTEGRITY
+  /**
+   * Release an integrity lock on a student's work ({@link EduIntegrityEvent#releaseLock}).
+   */
+  RELEASE_LOCKS
+  /**
+   * Enroll or drop people in the course ({@link EduEnrollment#bulkEnroll}).
+   */
+  MANAGE_ENROLLMENT
+}

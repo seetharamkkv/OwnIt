@@ -1,0 +1,28 @@
+/**
+ * Admin-only operations behind the admin console that plain CRUD does not cover.
+ * Owner: Shreya (core and admin).
+ */
+type EduAdmin {
+
+  /**
+   * Headline numbers for the admin overview page.
+   */
+  platformStats: function(): !EduAdmin.PlatformStats js-server
+
+  /**
+   * Removes {@link EduIntegrityEvent} rows older than {@link EduPlatformConfig#integrityRetentionDays}.
+   * Run nightly by a CronJob. Returns the number of rows removed.
+   */
+  purgeExpiredIntegrityEvents: function(): int js-server
+
+  /**
+   * Writes a zip of a course's grades, submissions, and integrity events to the file system and returns its URL.
+   */
+  exportCourseData: function(courseId: !string): string js-server
+
+  /**
+   * Deletes a person's submissions, quiz attempts, and integrity events, writing an {@link EduAuditLog}.
+   * Returns the number of records removed.
+   */
+  deleteStudentData: function(userId: !string, reason: !string): int js-server
+}

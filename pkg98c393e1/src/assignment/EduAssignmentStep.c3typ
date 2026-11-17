@@ -1,0 +1,69 @@
+/**
+ * One marked region of an assignment template that students complete on its own.
+ * Owner: Rohith (assignment engine).
+ */
+@db(index=['assignment, stepOrder'])
+entity type EduAssignmentStep {
+
+  /**
+   * Assignment the step belongs to.
+   */
+  assignment: !EduAssignment
+
+  /**
+   * Position of the step, starting at 1.
+   */
+  stepOrder: !int
+
+  /**
+   * Id from the template marker, for example `load` in `# <<STEP id="load">>`. Unique within the assignment.
+   */
+  markerId: !string
+
+  /**
+   * Step title shown in the step list.
+   */
+  title: !string
+
+  /**
+   * Step instructions in Markdown.
+   */
+  instructionsMd: string
+
+  /**
+   * Starting content students see in the step (code, or HTML for DOCX).
+   */
+  starterContent: string
+
+  /**
+   * Read-only template text between the previous step and this one (the start of the file for step 1).
+   * A file is rebuilt as the sum of (contextBefore + answer) for each step, then the last step's {@link #contextAfter}.
+   */
+  contextBefore: string
+
+  /**
+   * Read-only template text after this step: the next step's {@link #contextBefore}, or the rest of the file for the
+   * last step.
+   */
+  contextAfter: string
+
+  /**
+   * Notebook cell index of the step (IPYNB only).
+   */
+  cellIndex: int
+
+  /**
+   * Points the step is worth.
+   */
+  points: double
+
+  /**
+   * When true, the step's tests run on the step alone instead of on all earlier steps plus this one.
+   */
+  independentOfPrevious: boolean
+
+  /**
+   * Tests that check the step.
+   */
+  tests: [EduStepTest](step)
+}

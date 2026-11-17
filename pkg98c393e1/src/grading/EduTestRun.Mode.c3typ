@@ -1,0 +1,17 @@
+/**
+ * Where a test run happened, which decides whether it counts toward the grade.
+ */
+enum type EduTestRun.Mode {
+  /**
+   * In the student's browser; feedback only.
+   */
+  BROWSER
+  /**
+   * On the server sandbox; trusted.
+   */
+  SERVER
+  /**
+   * In an instructor's browser with hidden tests; trusted.
+   */
+  INSTRUCTOR_REGRADE
+}

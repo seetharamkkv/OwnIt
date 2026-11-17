@@ -1,0 +1,55 @@
+/**
+ * A student's answer to one quiz question.
+ * Owner: Shreenidhi (tests, grading, and quizzes).
+ */
+@db(unique=['attempt, question'])
+entity type EduQuizAnswer {
+
+  /**
+   * Attempt the answer belongs to.
+   */
+  attempt: !EduQuizAttempt
+
+  /**
+   * Question being answered.
+   */
+  question: !EduQuizQuestion
+
+  /**
+   * Chosen option ids (choice and true/false questions).
+   */
+  selectedOptionIds: [string]
+
+  /**
+   * Typed answer (short answer questions).
+   */
+  answerText: string
+
+  /**
+   * Submitted code (CODE questions).
+   */
+  code: string
+
+  /**
+   * Score from automatic grading.
+   */
+  autoScore: double
+
+  /**
+   * Score from manual grading, which replaces {@link #autoScore} when set.
+   */
+  manualScore: double
+
+  /**
+   * Grader feedback.
+   */
+  feedback: string
+
+  /**
+   * Staff manual grade of one answer of a submitted attempt. Needs `EDIT_GRADES` in the quiz's course. `points` must be
+   * between 0 and the question's points; `feedback` (up to 4,000 characters) replaces the old feedback. Recomputes the
+   * attempt's {@link EduQuizAttempt#score} (sum of manual, else automatic, scores) and sets it GRADED once no answered
+   * CODE question is left without a manual score. Audited as `quiz.manualGrade`. Returns the answer.
+   */
+  gradeManually: function(answerId: !string, points: !double, feedback: string): !EduQuizAnswer js-server
+}

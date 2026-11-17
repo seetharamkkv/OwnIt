@@ -1,0 +1,27 @@
+// Code tests for the demo quiz question seed_quizq_cs101_q1_6 (Shreenidhi). The hidden test never reaches students.
+[
+  {
+    "id": "seed_test_quiz_cs101_q1_6_visible",
+    "question": {
+      "id": "seed_quizq_cs101_q1_6"
+    },
+    "testName": "total_units adds up the units column",
+    "code": "import pandas as pd\n\n\ndef test_total_units_simple():\n    df = pd.DataFrame({\"units\": [1, 2, 3]})\n    result = total_units(df)\n    assert result == 6, f\"expected 6, got {result!r}\"\n",
+    "visibility": "VISIBLE",
+    "points": 1,
+    "timeoutMs": 5000,
+    "testOrder": 1
+  },
+  {
+    "id": "seed_test_quiz_cs101_q1_6_hidden",
+    "question": {
+      "id": "seed_quizq_cs101_q1_6"
+    },
+    "testName": "total_units counts missing values as 0 and returns an int",
+    "code": "import pandas as pd\n\n\ndef test_total_units_missing():\n    df = pd.DataFrame({\"units\": [4, None, 6]})\n    result = total_units(df)\n    assert result == 10, f\"expected 10, got {result!r}\"\n    assert type(result) is int, f\"expected an int, got {type(result).__name__}\"\n",
+    "visibility": "HIDDEN",
+    "points": 2,
+    "timeoutMs": 5000,
+    "testOrder": 2
+  }
+]

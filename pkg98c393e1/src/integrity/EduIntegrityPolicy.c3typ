@@ -1,0 +1,98 @@
+/**
+ * Integrity rules for a work session. Platform default, course, and assignment or quiz levels are merged by
+ * {@link #forContext}: an unset field inherits from the level above, and admin-locked fields cannot be loosened.
+ * Owner: Seetharam (integrity).
+ */
+type EduIntegrityPolicy {
+
+  /**
+   * Paste mode used when no level sets {@link #pasteMode}.
+   */
+  DEFAULT_PASTE_MODE: const string = 'BLOCK_AND_LOG'
+
+  /**
+   * Large-insert threshold used when no level sets {@link #largeInsertChars}.
+   */
+  DEFAULT_LARGE_INSERT_CHARS: const int = 80
+
+  /**
+   * What to do with pastes from outside the app.
+   */
+  pasteMode: string enum EduIntegrityPolicy.PasteMode
+
+  /**
+   * When true, pastes of text copied inside the app are blocked too.
+   */
+  blockInternalPaste: boolean
+
+  /**
+   * When true, the right-click menu is allowed.
+   */
+  allowContextMenu: boolean
+
+  /**
+   * When true, students may copy text from the instructions panel.
+   */
+  allowCopyOfQuestion: boolean
+
+  /**
+   * When true, work happens in full screen and leaving it is logged.
+   */
+  requireFullscreen: boolean
+
+  /**
+   * Number of tab switches before the student sees a warning. Unset means never.
+   */
+  tabSwitchWarnAt: int
+
+  /**
+   * Number of tab switches before work freezes until an instructor unlocks it. Unset means never.
+   */
+  tabSwitchLockAt: int
+
+  /**
+   * Characters in one change, not from an in-app paste, that count as a large insert.
+   */
+  largeInsertChars: int
+
+  /**
+   * When true, the on-screen watermark is hidden.
+   */
+  hideWatermark: boolean
+
+  /**
+   * Notice for AI tools printed in the watermark.
+   */
+  watermarkAiNotice: string
+
+  /**
+   * When true, the watermark carries the submission's canary instruction and submissions are checked for it.
+   */
+  canaryEnabled: boolean
+
+  /**
+   * When true, the work page deters screenshots and printing: the content is hidden while the window does not have
+   * focus, the Print Screen key clears the clipboard and hides the work for a moment, printing and "save page" are
+   * blocked, and each attempt is logged as `SCREENSHOT_ATTEMPT` or `PRINT_BLOCKED`. A browser cannot stop an
+   * operating-system screenshot, so this is a deterrent plus a log, not a guarantee.
+   */
+  blockScreenshots: boolean
+
+  /**
+   * Effective policy for an assignment or quiz: platform default, then course, then the item itself, with locked
+   * fields kept at the platform value. `contextId` is the assignment or quiz id.
+   */
+  forContext: function(contextKind: !string enum EduIntegrityEvent.ContextKind, contextId: !string): !EduIntegrityPolicy js-server
+
+  /**
+   * The own, inherited and effective policy of one level, for the policy editor. `levelId` is the course, assignment
+   * or quiz id (empty for PLATFORM). Instructors and TAs of the course, or admins.
+   */
+  editorView: function(level: !string enum EduIntegrityPolicy.Level, levelId: string): !EduIntegrityPolicy.EditorView js-server
+
+  /**
+   * Saves the override of a COURSE, ASSIGNMENT or QUIZ level (platform saves stay in the admin console). Rejects
+   * locked fields with `EDU_VALIDATION`, and writes a `policy.update` {@link EduAuditLog}. Course INSTRUCTOR or admin.
+   */
+  saveOverride: function(level: !string enum EduIntegrityPolicy.Level, levelId: !string, policy: EduIntegrityPolicy, reason: string): !EduIntegrityPolicy.EditorView js-server
+}

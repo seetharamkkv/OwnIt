@@ -1,0 +1,37 @@
+/**
+ * Builds final homework files by putting students' step answers back into the template.
+ * Owner: Rohith (assignment engine).
+ */
+type EduAssembler {
+
+  /**
+   * Builds the submission's final file (PY, IPYNB, or DOCX), stores it at `edu/submissions/<submissionId>/assembled.<ext>`,
+   * records the URL on {@link EduSubmission#assembledFileUrl}, and returns it. Steps without an answer use their
+   * starter content. Called by {@link EduSubmission#submitMine}; also allowed for course staff.
+   */
+  assemble: function(submissionId: !string): !string py
+
+  /**
+   * Returns the program text made of the student's answers for steps 1..`stepOrder` and starter content for later
+   * steps (IPYNB: code cells up to and including the step's cell), for tests that build on earlier steps.
+   */
+  assembleUpTo: function(submissionId: !string, stepOrder: !int): !string py
+
+  /**
+   * Returns a one-hour download link for the submission's assembled file, assembling it first when needed.
+   * The submission's student or course staff only.
+   */
+  downloadLink: function(submissionId: !string): !string py
+
+  /**
+   * Builds the assignment's file filled with each step's starter content and returns a one-hour download link.
+   * Instructor or TA only.
+   */
+  previewTemplate: function(assignmentId: !string): !string py
+
+  /**
+   * Builds a DOCX file from the assignment's template with each step region replaced by the submission's answer
+   * (starter content when `submissionId` is null), and returns it base64-encoded. Runs in the `py-edu_312` runtime.
+   */
+  doBuildDocx: private function(assignmentId: !string, submissionId: string): !string py-edu_312
+}

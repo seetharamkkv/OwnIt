@@ -1,0 +1,54 @@
+// Demo step answers (Rohith, for assembly testing).
+[
+  {
+    "id": "seed_response_hw1_student01_load",
+    "submission": {
+      "id": "seed_submission_cs101_hw1_student01"
+    },
+    "step": {
+      "id": "seed_assignment_cs101_hw1_load"
+    },
+    "content": "    return pd.read_csv(path)\n",
+    "contentFormat": "TEXT",
+    "revision": 3,
+    "completed": true
+  },
+  {
+    "id": "seed_response_hw1_student01_clean",
+    "submission": {
+      "id": "seed_submission_cs101_hw1_student01"
+    },
+    "step": {
+      "id": "seed_assignment_cs101_hw1_clean"
+    },
+    "content": "    df = df.dropna(subset=[\"units\"]).copy()\n    df[\"units\"] = df[\"units\"].astype(int)\n    df[\"revenue\"] = df[\"units\"] * df[\"price\"]\n    return df\n",
+    "contentFormat": "TEXT",
+    "revision": 5,
+    "completed": true
+  },
+  {
+    "id": "seed_response_lab1_student01_mean_mass",
+    "submission": {
+      "id": "seed_submission_ds201_lab1_student01"
+    },
+    "step": {
+      "id": "seed_assignment_ds201_lab1_mean_mass"
+    },
+    "content": "mean_mass = df.groupby('species')['mass_g'].mean()\n",
+    "contentFormat": "TEXT",
+    "revision": 2,
+    "completed": true
+  },
+  {
+    "id": "seed_response_report1_student01_intro",
+    "submission": {
+      "id": "seed_submission_ds201_report1_student01"
+    },
+    "step": {
+      "id": "seed_assignment_ds201_report1_intro"
+    },
+    "content": "<p>We measured <strong>body mass</strong> and <em>bill length</em> for three penguin species.</p>",
+    "contentFormat": "HTML",
+    "revision": 1
+  }
+]

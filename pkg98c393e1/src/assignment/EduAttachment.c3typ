@@ -1,0 +1,20 @@
+/**
+ * A file attached to an assignment, such as test data.
+ */
+type EduAttachment {
+
+  /**
+   * File name as students and tests see it, for example `data/sample.csv`.
+   */
+  fileName: !string
+
+  /**
+   * File system URL of the stored file.
+   */
+  url: !string
+
+  /**
+   * File size in bytes.
+   */
+  sizeBytes: int
+}

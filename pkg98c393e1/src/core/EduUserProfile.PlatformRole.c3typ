@@ -1,0 +1,18 @@
+/**
+ * Platform-wide role of a person, which decides the menus they see and the admin tools they can use.
+ * Course-level roles are separate and live on {@link EduEnrollment#courseRole}.
+ */
+enum type EduUserProfile.PlatformRole {
+  /**
+   * Manages users, courses, platform integrity defaults, the audit log, and data retention.
+   */
+  ADMIN
+  /**
+   * Can be given instructor or TA enrollments and create assignments and quizzes.
+   */
+  INSTRUCTOR
+  /**
+   * Takes assignments and quizzes in the courses they are enrolled in.
+   */
+  STUDENT
+}

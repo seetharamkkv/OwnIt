@@ -1,0 +1,130 @@
+/**
+ * A timed quiz in a course, drawn from a pool of {@link EduQuizQuestion}s.
+ * Owner: Shreenidhi (tests, grading, and quizzes).
+ */
+@db(index=['course, status'])
+entity type EduQuiz {
+
+  /**
+   * Course the quiz belongs to.
+   */
+  course: !EduCourse
+
+  /**
+   * Quiz title.
+   */
+  title: !string
+
+  /**
+   * Instructions in Markdown.
+   */
+  instructionsMd: string
+
+  /**
+   * When students can start.
+   */
+  opensAt: datetime
+
+  /**
+   * When the quiz stops accepting attempts.
+   */
+  closesAt: datetime
+
+  /**
+   * Time limit per attempt in minutes. Unset means no limit.
+   */
+  timeLimitMin: int
+
+  /**
+   * Attempts each student may make.
+   */
+  attemptsAllowed: int = 1
+
+  /**
+   * When true, question order is shuffled per attempt.
+   */
+  shuffleQuestions: boolean
+
+  /**
+   * When true, option order is shuffled per attempt.
+   */
+  shuffleOptions: boolean
+
+  /**
+   * Questions drawn per attempt. Unset means all questions.
+   */
+  questionsPerAttempt: int
+
+  /**
+   * When students see their results.
+   */
+  showResults: string enum EduQuiz.ResultsVisibility = AFTER_SUBMIT
+
+  /**
+   * Quiz-level integrity overrides, applied on top of the course policy.
+   */
+  integrityPolicy: EduIntegrityPolicy
+
+  /**
+   * Publishing state.
+   */
+  status: string enum EduQuiz.Status = DRAFT
+
+  /**
+   * Question pool.
+   */
+  questions: [EduQuizQuestion](quiz)
+
+  /**
+   * Student attempts.
+   */
+  attempts: [EduQuizAttempt](quiz)
+
+  /**
+   * Published and closed quizzes of a course the caller is enrolled in (any course role; admins too), one
+   * {@link EduQuiz.MyQuizRow} each with the caller's attempt summary. Never includes questions or answers.
+   * Throws `EDU_FEATURE_DISABLED` when the `quizzes` flag is off.
+   */
+  myQuizzes: function(courseId: !string): [EduQuiz.MyQuizRow] js-server
+
+  /**
+   * One published or closed quiz as {@link EduQuiz.MyQuizRow}, for the quiz start screen. Throws `EDU_NOT_FOUND` for
+   * drafts and `EDU_FEATURE_DISABLED` when the `quizzes` flag is off.
+   */
+  myQuiz: function(quizId: !string): !EduQuiz.MyQuizRow js-server
+
+  /**
+   * Staff (course INSTRUCTOR or TA, or admin): every quiz of a course, drafts included, with question counts, the
+   * pool's maximum score and the number of attempts, ordered by {@link #closesAt} then title.
+   */
+  courseQuizzes: function(courseId: !string): [EduQuiz.CourseRow] js-server
+
+  /**
+   * Staff (course INSTRUCTOR or TA, or admin): one quiz with every setting, for the quiz builder. Questions come from
+   * {@link EduQuizQuestion#forQuiz}.
+   */
+  forEdit: function(quizId: !string): !EduQuiz js-server
+
+  /**
+   * Creates (no id) or updates a quiz's settings. Needs `EDIT_CONTENT` in {@link #course}. Writes title,
+   * instructionsMd, opensAt, closesAt, timeLimitMin, attemptsAllowed, shuffleQuestions, shuffleOptions,
+   * questionsPerAttempt and showResults; unset values clear the field. Never writes {@link #status} (use
+   * {@link #setStatus}) or {@link #integrityPolicy} (use `EduIntegrityPolicy.saveOverride`). New quizzes are DRAFT;
+   * the course can't change on update. Throws `EDU_VALIDATION` for a missing title, a time limit outside 1–600
+   * minutes, attempts outside 1–20, questionsPerAttempt below 1, or closesAt not after opensAt.
+   */
+  saveForCourse: function(quiz: !EduQuiz): !EduQuiz js-server
+
+  /**
+   * Changes {@link #status}. Needs `PUBLISH_CONTENT`. PUBLISHED needs at least one question, and every question must
+   * pass {@link EduQuizQuestion#saveForQuiz}'s checks; DRAFT is allowed only while the quiz has no attempts; CLOSED
+   * submits and grades every attempt still in progress. Audited as `quiz.status`.
+   */
+  setStatus: function(quizId: !string, status: !string enum EduQuiz.Status): !EduQuiz js-server
+
+  /**
+   * Deletes a DRAFT quiz that has no attempts, with its questions and their tests. Needs `EDIT_CONTENT`.
+   * Returns true when a quiz was removed.
+   */
+  removeDraft: function(quizId: !string): boolean js-server
+}

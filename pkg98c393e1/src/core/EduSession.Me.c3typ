@@ -1,0 +1,50 @@
+/**
+ * The current user as the React app sees it, returned by {@link EduSession#me}.
+ */
+type EduSession.Me {
+
+  /**
+   * Effective user id (a persona id while a dev persona is active).
+   */
+  userId: !string
+
+  /**
+   * Real signed-in {@link User} id. Differs from `userId` only while a dev persona is active.
+   */
+  realUserId: !string
+
+  /**
+   * Display name of the effective user.
+   */
+  displayName: string
+
+  /**
+   * Email of the effective user.
+   */
+  email: string
+
+  /**
+   * Student number of the effective user.
+   */
+  studentNumber: string
+
+  /**
+   * Platform role of the effective user.
+   */
+  platformRole: !string enum EduUserProfile.PlatformRole
+
+  /**
+   * True while a dev persona is active.
+   */
+  personaActive: boolean
+
+  /**
+   * Active course memberships of the effective user.
+   */
+  courses: [EduSession.CourseMembership]
+
+  /**
+   * Names of the feature flags that are on, from {@link EduPlatformConfig#featureFlags}.
+   */
+  enabledFlags: [string]
+}

@@ -1,0 +1,17 @@
+/**
+ * Publishing state of a quiz.
+ */
+enum type EduQuiz.Status {
+  /**
+   * Being authored; students cannot see it.
+   */
+  DRAFT
+  /**
+   * Open to students between {@link EduQuiz#opensAt} and {@link EduQuiz#closesAt}.
+   */
+  PUBLISHED
+  /**
+   * No longer accepts attempts.
+   */
+  CLOSED
+}

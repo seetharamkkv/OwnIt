@@ -1,0 +1,20 @@
+/**
+ * What {@link EduSubmission#requireEditable} found once it allowed a student's write.
+ */
+type EduSubmission.EditContext {
+
+  /**
+   * Id of the caller's {@link EduSubmission} for the step's assignment.
+   */
+  submissionId: !string
+
+  /**
+   * Current {@link EduSubmission#status}, NOT_STARTED or IN_PROGRESS.
+   */
+  submissionStatus: string enum EduSubmission.Status
+
+  /**
+   * File kind of the assignment, which decides the {@link EduStepResponse#contentFormat}.
+   */
+  fileKind: string enum EduAssignment.FileKind
+}

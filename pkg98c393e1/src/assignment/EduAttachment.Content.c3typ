@@ -1,0 +1,20 @@
+/**
+ * The contents of one attached file, returned by {@link EduAssignment.Files#readTestData}.
+ */
+type EduAttachment.Content {
+
+  /**
+   * Path the tests open, for example `data/sales.csv`.
+   */
+  fileName: !string
+
+  /**
+   * File contents, base64-encoded.
+   */
+  contentBase64: !string
+
+  /**
+   * File size in bytes.
+   */
+  sizeBytes: int
+}

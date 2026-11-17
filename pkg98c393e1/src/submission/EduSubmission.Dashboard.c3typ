@@ -1,0 +1,37 @@
+/**
+ * Everything the student home page shows, returned by {@link EduSubmission#myDashboard}: open work across every
+ * active course, counts for the summary tiles, and recently released grades.
+ */
+type EduSubmission.Dashboard {
+
+  /**
+   * Released assignments in every course where the caller is a student, oldest due date first.
+   * Includes submitted and graded work so the UI can filter.
+   */
+  assignments: [EduSubmission.MyAssignmentRow]
+
+  /**
+   * Published quizzes in those courses, from {@link EduQuiz#myQuizzes}. Empty when the `quizzes` flag is off.
+   */
+  quizzes: [EduQuiz.MyQuizRow]
+
+  /**
+   * Assignments and quizzes not yet handed in whose due or close time is within the next 7 days.
+   */
+  dueSoonCount: int
+
+  /**
+   * Assignments the student has started but not handed in.
+   */
+  inProgressCount: int
+
+  /**
+   * Assignments past their due date, not handed in, whose late window is still open.
+   */
+  lateWindowCount: int
+
+  /**
+   * The newest grades the student may see, newest first, at most 5.
+   */
+  recentlyGraded: [EduSubmission.GradedRow]
+}

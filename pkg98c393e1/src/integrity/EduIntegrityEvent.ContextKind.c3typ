@@ -1,0 +1,13 @@
+/**
+ * Kind of work session an integrity event or policy belongs to.
+ */
+enum type EduIntegrityEvent.ContextKind {
+  /**
+   * An assignment; the context id is the assignment or submission id.
+   */
+  ASSIGNMENT
+  /**
+   * A quiz; the context id is the quiz or quiz attempt id.
+   */
+  QUIZ
+}

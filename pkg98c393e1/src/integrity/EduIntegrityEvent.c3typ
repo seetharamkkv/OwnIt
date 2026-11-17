@@ -1,0 +1,102 @@
+/**
+ * Something that happened during a work session that the integrity layer records (paste, tab switch, canary, ...).
+ * The server time is `meta.created`.
+ * Owner: Seetharam (integrity).
+ */
+@db(index=['contextId', 'courseId, person'])
+entity type EduIntegrityEvent {
+
+  /**
+   * Kind of work session.
+   */
+  contextKind: !string enum EduIntegrityEvent.ContextKind
+
+  /**
+   * Submission id or quiz attempt id.
+   */
+  contextId: !string
+
+  /**
+   * Course of the work session.
+   */
+  courseId: !string
+
+  /**
+   * Student the event is about.
+   */
+  person: !EduUserProfile
+
+  /**
+   * Step the student was on, when known.
+   */
+  stepId: string
+
+  /**
+   * What happened.
+   */
+  eventKind: !string enum EduIntegrityEvent.EventKind
+
+  /**
+   * How serious it is, set by the server from the event kind.
+   */
+  severity: string enum EduIntegrityEvent.Severity = INFO
+
+  /**
+   * Browser time of the event.
+   */
+  clientAt: datetime
+
+  /**
+   * Measurements for the event.
+   */
+  details: EduIntegrityEvent.Details
+
+  /**
+   * Browser session id, to tell apart two tabs or devices.
+   */
+  clientSessionId: string
+
+  /**
+   * Stores events sent by the browser for the caller's own submission or quiz attempt (at most 100 per call), drops
+   * server-only kinds, sets severities, recounts {@link EduSubmission#flagCount}, and writes LOCK_TRIGGERED when the
+   * tab-switch count reaches {@link EduIntegrityPolicy#tabSwitchLockAt}. Returns the session's lock state.
+   */
+  logBatch: function(contextKind: !string enum EduIntegrityEvent.ContextKind, contextId: !string, clientSessionId: !string, events: ![EduIntegrityEvent.ClientEvent]): !EduIntegrityEvent.SessionState js-server
+
+  /**
+   * Lock and tab-switch state of the caller's own submission or quiz attempt, without writing anything. Called when
+   * the work page loads.
+   */
+  sessionStateMine: function(contextKind: !string enum EduIntegrityEvent.ContextKind, contextId: !string): !EduIntegrityEvent.SessionState js-server
+
+  /**
+   * For other server methods (step saves, submit, quiz answers): returns false when the session is not locked, and
+   * throws `EDU_LOCKED` when it is.
+   */
+  assertNotLocked: function(contextKind: !string enum EduIntegrityEvent.ContextKind, contextId: !string): boolean js-server
+
+  /**
+   * One page of a session's events, newest first (default limit 200). Instructor or TA of the course.
+   */
+  timeline: function(contextKind: !string enum EduIntegrityEvent.ContextKind, contextId: !string, limit: int, offset: int): [EduIntegrityEvent] js-server
+
+  /**
+   * The submissions and quiz attempts of one student in a course, with integrity totals. Instructor or TA.
+   */
+  studentContexts: function(courseId: !string, personId: !string): [EduIntegrityEvent.ContextRow] js-server
+
+  /**
+   * Per-student totals for a course since `since` (all time when unset). Instructor or TA only.
+   */
+  courseReport: function(courseId: !string, since: datetime): [EduIntegrityEvent.StudentRiskRow] js-server
+
+  /**
+   * Per-course totals since `since` for the admin console. Admin only.
+   */
+  platformReport: function(since: datetime): [EduIntegrityEvent.CourseRiskRow] js-server
+
+  /**
+   * Unfreezes a work session frozen by too many tab switches and writes an {@link EduAuditLog}. Instructor only.
+   */
+  releaseLock: function(contextKind: !string enum EduIntegrityEvent.ContextKind, contextId: !string, reason: !string): !EduIntegrityEvent js-server
+}

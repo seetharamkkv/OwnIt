@@ -1,0 +1,46 @@
+/**
+ * Everything the policy editor needs for one level, returned by {@link EduIntegrityPolicy#editorView} and
+ * {@link EduIntegrityPolicy#saveOverride}.
+ */
+type EduIntegrityPolicy.EditorView {
+
+  /**
+   * Level being edited.
+   */
+  level: !string enum EduIntegrityPolicy.Level
+
+  /**
+   * Course, assignment or quiz id. Empty for {@link EduIntegrityPolicy.Level#PLATFORM}.
+   */
+  levelId: string
+
+  /**
+   * Course the level belongs to. Empty for the platform level.
+   */
+  courseId: string
+
+  /**
+   * What this level itself sets. An unset field inherits from the level above.
+   */
+  own: EduIntegrityPolicy
+
+  /**
+   * The merged value of the levels above this one (locks applied, defaults not yet applied).
+   */
+  inherited: EduIntegrityPolicy
+
+  /**
+   * The policy a student at this level gets: inherited, then own, then locks and the DEFAULT_* constants.
+   */
+  effective: EduIntegrityPolicy
+
+  /**
+   * Fields admins have locked to the platform value ({@link EduPlatformConfig#lockedPolicyFields}).
+   */
+  lockedFields: [string]
+
+  /**
+   * True when the caller may save this level: an INSTRUCTOR of the course, or an admin.
+   */
+  canEdit: boolean
+}

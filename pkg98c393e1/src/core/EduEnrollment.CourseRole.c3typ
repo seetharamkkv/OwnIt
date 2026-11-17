@@ -1,0 +1,17 @@
+/**
+ * Role a person has inside one course.
+ */
+enum type EduEnrollment.CourseRole {
+  /**
+   * Runs the course: authors and publishes work, sets course policy, grades.
+   */
+  INSTRUCTOR
+  /**
+   * Helps grade and review; can draft but not publish work.
+   */
+  TA
+  /**
+   * Completes assignments and quizzes and sees only their own work.
+   */
+  STUDENT
+}

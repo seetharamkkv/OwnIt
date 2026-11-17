@@ -1,0 +1,127 @@
+/**
+ * One student's attempt at a quiz, with the questions drawn for it.
+ * Owner: Shreenidhi (tests, grading, and quizzes).
+ */
+@db(index=['quiz, student'])
+entity type EduQuizAttempt {
+
+  /**
+   * Quiz being attempted.
+   */
+  quiz: !EduQuiz
+
+  /**
+   * Student making the attempt.
+   */
+  student: !EduUserProfile
+
+  /**
+   * Attempt number, starting at 1.
+   */
+  attemptNo: int
+
+  /**
+   * Ids of the questions drawn for this attempt, in the order shown.
+   */
+  questionIds: [string]
+
+  /**
+   * Option order per question: question id to the option ids in the order shown.
+   */
+  optionOrder: map<string, [string]>
+
+  /**
+   * When the attempt started.
+   */
+  startedAt: datetime
+
+  /**
+   * When the attempt is submitted automatically.
+   */
+  deadlineAt: datetime
+
+  /**
+   * When the attempt was submitted.
+   */
+  submittedAt: datetime
+
+  /**
+   * Total score.
+   */
+  score: double
+
+  /**
+   * Lifecycle state.
+   */
+  status: string enum EduQuizAttempt.Status = IN_PROGRESS
+
+  /**
+   * Answers in this attempt.
+   */
+  answers: [EduQuizAnswer](attempt)
+
+  /**
+   * Starts or resumes the caller's attempt and returns its {@link EduQuizAttempt.Paper}. Needs the `quizzes` flag,
+   * an active STUDENT enrollment and a PUBLISHED quiz between {@link EduQuiz#opensAt} and {@link EduQuiz#closesAt}.
+   * Idempotent: an attempt IN_PROGRESS before its deadline is returned as is. An expired one is submitted and graded
+   * first, then `EDU_DEADLINE_PASSED` is thrown. A new attempt (when {@link EduQuiz#attemptsAllowed} permits, else
+   * `EDU_VALIDATION`) draws its questions on the server: {@link EduQuiz#questionsPerAttempt} of them (spread evenly
+   * over {@link EduQuizQuestion#poolTag} groups when tags exist), shuffled when {@link EduQuiz#shuffleQuestions}, with
+   * options shuffled per question when {@link EduQuiz#shuffleOptions} (never for TRUE_FALSE).
+   * {@link #deadlineAt} = start + time limit × (1 + {@link EduEnrollment.Accommodation#extraTimePct} / 100), capped at
+   * closesAt; closesAt alone when there is no time limit.
+   */
+  startMine: function(quizId: !string): !EduQuizAttempt.Paper js-server
+
+  /**
+   * Saves (upserts) the caller's answer to one question of their attempt; only the field for the question's kind is
+   * kept (option ids for choice kinds, answerText up to 2,000 characters, code up to 50,000). Throws `EDU_FORBIDDEN`
+   * for someone else's attempt, `EDU_DEADLINE_PASSED` when the attempt is no longer IN_PROGRESS, the quiz is not
+   * PUBLISHED, or more than 5 s have passed since {@link #deadlineAt}, `EDU_LOCKED` while the integrity session is
+   * locked, and `EDU_VALIDATION` for a question not in the attempt or unknown option ids. Returns the answer's id,
+   * question.id, selectedOptionIds, answerText, code and meta.updated.
+   */
+  saveAnswerMine: function(attemptId: !string, questionId: !string, selectedOptionIds: [string], answerText: string, code: string): !EduQuizAnswer js-server
+
+  /**
+   * Submits and auto-grades the caller's attempt: SINGLE_CHOICE and TRUE_FALSE exact match, MULTI_CHOICE exact set
+   * (all or nothing), SHORT_ANSWER against accepted answers ignoring case and extra whitespace. Answered CODE
+   * questions keep no automatic score and leave the attempt SUBMITTED for manual grading; otherwise it is GRADED.
+   * Allowed after the deadline (answers saved up to it count). Idempotent for an attempt already submitted. Throws
+   * `EDU_LOCKED` while the integrity session is locked (the server auto-submit still runs). The returned attempt has
+   * {@link #score} only when results are visible ({@link EduQuiz#showResults}).
+   */
+  submitMine: function(attemptId: !string): !EduQuizAttempt js-server
+
+  /**
+   * Results of one of the caller's submitted attempts. Scores, correctness, correct answers and feedback are included
+   * only when results are visible: AFTER_SUBMIT, or AFTER_CLOSE once the quiz has closed. Throws `EDU_VALIDATION`
+   * for an attempt still in progress.
+   */
+  resultMine: function(attemptId: !string): !EduQuizAttempt.Result js-server
+
+  /**
+   * Submits and grades every IN_PROGRESS attempt more than 5 s past its {@link #deadlineAt}, without the integrity
+   * lock check. Run by the `EduQuizAutoSubmit` CronJob every minute. Returns the number submitted.
+   */
+  autoSubmitExpired: function(): int js-server
+
+  /**
+   * Staff (course INSTRUCTOR or TA, or admin): every attempt at a quiz with the student's id, displayName and
+   * studentNumber, attemptNo, status, score, startedAt, deadlineAt and submittedAt, newest first.
+   */
+  forQuiz: function(quizId: !string): [EduQuizAttempt] js-server
+
+  /**
+   * Staff (course INSTRUCTOR or TA, or admin): the full results of any attempt, with correct answers, automatic and
+   * manual scores and answer ids, for the manual grading screen.
+   */
+  reviewAttempt: function(attemptId: !string): !EduQuizAttempt.Result js-server
+
+  /**
+   * Re-runs automatic grading of a submitted attempt (for example after an answer key was fixed), keeping manual
+   * scores, and recomputes {@link #score} and {@link #status}. Needs `EDIT_GRADES`. Audited as `quiz.regrade` when the
+   * score changes.
+   */
+  regradeAttempt: function(attemptId: !string): !EduQuizAttempt js-server
+}

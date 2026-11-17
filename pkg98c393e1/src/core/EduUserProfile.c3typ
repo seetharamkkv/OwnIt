@@ -1,0 +1,50 @@
+/**
+ * A person who uses the homework platform, with display details and a platform-wide role.
+ * The id is the C3 {@link User} id, or a `seed_user_*` id for a demo persona.
+ * Owner: Shreya (core and admin).
+ */
+@db(index=['email', 'platformRole'])
+entity type EduUserProfile {
+
+  /**
+   * Name shown in lists, the gradebook, and the on-screen watermark.
+   */
+  displayName: !string
+
+  /**
+   * Contact email, also used to match rows in a bulk enrollment CSV.
+   */
+  email: string
+
+  /**
+   * Institution student number, shown on the watermark and in exports.
+   */
+  studentNumber: string
+
+  /**
+   * Platform-wide role. Course-level roles are on {@link EduEnrollment#courseRole}.
+   */
+  platformRole: !string enum EduUserProfile.PlatformRole
+
+  /**
+   * When true, the person can no longer sign in to the platform's pages or be enrolled.
+   */
+  deactivated: boolean
+
+  /**
+   * Demo persona an admin is acting as, used by {@link EduSession#currentUserId} only while the
+   * `devPersonas` feature flag is on.
+   */
+  devPersonaId: string
+
+  /**
+   * Course enrollments of this person.
+   */
+  enrollments: [EduEnrollment](person)
+
+  /**
+   * Changes the platform role, updates the matching `Edu.Role.*` user group, and writes an {@link EduAuditLog}.
+   * Admin only.
+   */
+  setPlatformRole: member function(role: !string enum EduUserProfile.PlatformRole, reason: string): EduUserProfile js-server
+}

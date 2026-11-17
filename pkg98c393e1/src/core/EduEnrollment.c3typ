@@ -1,0 +1,67 @@
+/**
+ * Links a person to a course with a course role.
+ * Owner: Shreya (core and admin).
+ */
+@db(unique=['course, person'], index=['person'])
+entity type EduEnrollment {
+
+  /**
+   * Course the person is enrolled in.
+   */
+  course: !EduCourse
+
+  /**
+   * Enrolled person.
+   */
+  person: !EduUserProfile
+
+  /**
+   * Role of the person in this course.
+   */
+  courseRole: !string enum EduEnrollment.CourseRole
+
+  /**
+   * Whether the enrollment is active or dropped.
+   */
+  status: string enum EduEnrollment.Status = ACTIVE
+
+  /**
+   * Accommodations for this person in this course, applied to every assignment and quiz.
+   */
+  accommodation: EduEnrollment.Accommodation
+
+  /**
+   * Shared server-side guard. Returns the caller's active enrollment in the course when its role is one of `roles`,
+   * and throws `EDU_FORBIDDEN` otherwise. Platform admins always pass (the result is null for them).
+   * Every instructor and TA method calls this first.
+   */
+  requireCourseRole: function(courseId: !string, roles: ![string]): EduEnrollment js-server
+
+  /**
+   * Finer guard for actions a TA may or may not hold. Instructors in the course and platform admins always pass;
+   * a TA passes only when `permission` is in {@link EduCourse#taPermissions} (or, when that is unset, in
+   * {@link EduPlatformConfig#defaultTaPermissions}); anyone else gets `EDU_FORBIDDEN`.
+   * Returns the caller's enrollment (null for admins). Use this instead of {@link #requireCourseRole} for grade
+   * changes, publishing, extensions, integrity views, lock releases and enrollment changes.
+   */
+  requireCoursePermission: function(courseId: !string, permission: !string enum EduCourse.Permission): EduEnrollment js-server
+
+  /**
+   * The caller's permissions in a course, for the UI to show or hide controls. Instructors and admins get every
+   * {@link EduCourse.Permission}; TAs get the course's TA set; students get an empty list.
+   * The server still checks every action with {@link #requireCoursePermission}.
+   */
+  myPermissions: function(courseId: !string): [string enum EduCourse.Permission] js-server
+
+  /**
+   * Sets a student's accommodation in a course and writes an `accommodation.update` {@link EduAuditLog} entry.
+   * Needs {@link EduCourse.Permission#GRANT_EXTENSIONS}.
+   */
+  setAccommodation: member function(accommodation: EduEnrollment.Accommodation, reason: string): EduEnrollment js-server
+
+  /**
+   * Enrolls many people at once from CSV rows, creating {@link EduUserProfile} records when needed.
+   * Instructor or admin only. Returns one result per row.
+   */
+  bulkEnroll: function(courseId: !string, rows: ![EduEnrollment.BulkRow]): [EduEnrollment.BulkResult] js-server
+}

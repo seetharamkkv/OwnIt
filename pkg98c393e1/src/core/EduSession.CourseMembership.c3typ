@@ -1,0 +1,35 @@
+/**
+ * One active course membership inside {@link EduSession.Me}.
+ */
+type EduSession.CourseMembership {
+
+  /**
+   * Course id.
+   */
+  courseId: !string
+
+  /**
+   * Course code, for example `CS101-F26`.
+   */
+  courseCode: string
+
+  /**
+   * Course title.
+   */
+  courseTitle: string
+
+  /**
+   * Role in the course.
+   */
+  courseRole: !string enum EduEnrollment.CourseRole
+
+  /**
+   * Term label of the course, for example `Fall 2026`.
+   */
+  courseTerm: string
+
+  /**
+   * Display names of the course's active instructors, for course cards.
+   */
+  instructorNames: [string]
+}

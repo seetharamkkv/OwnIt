@@ -1,0 +1,13 @@
+/**
+ * Whether an enrollment is currently in effect.
+ */
+enum type EduEnrollment.Status {
+  /**
+   * The person is in the course.
+   */
+  ACTIVE
+  /**
+   * The person left the course; their past work is kept.
+   */
+  DROPPED
+}

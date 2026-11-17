@@ -1,0 +1,25 @@
+/**
+ * A course gradebook returned by {@link EduGradebook#courseGrid}.
+ */
+type EduGradebook.Grid {
+
+  /**
+   * {@link EduCourse#code} of the course, for headers and export file names.
+   */
+  courseCode: string
+
+  /**
+   * {@link EduCourse#title} of the course.
+   */
+  courseTitle: string
+
+  /**
+   * Graded items, as the grid's columns.
+   */
+  items: [EduGradebook.Item]
+
+  /**
+   * One row per student.
+   */
+  rows: [EduGradebook.Row]
+}

@@ -1,0 +1,20 @@
+/**
+ * Short summary of a test run, shown in the step list.
+ */
+type EduTestSummary {
+
+  /**
+   * Tests that passed.
+   */
+  passedCount: int
+
+  /**
+   * Tests that ran.
+   */
+  totalCount: int
+
+  /**
+   * When the run finished.
+   */
+  ranAt: datetime
+}
